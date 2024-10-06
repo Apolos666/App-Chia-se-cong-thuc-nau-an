@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Colors -->
+    <!-- Warm Orange: Use for accents like buttons, icons, or action highlights. -->
+    <color name="warm_orange">#FFA726</color>
+
+    <!-- Fresh Green: Great for success actions like "Save Recipe" or "Start Cooking" buttons. -->
+    <color name="fresh_green">#66BB6A</color>
+
+    <!-- Secondary Colors -->
+    <!-- Muted Yellow: Use for highlighting text, backgrounds, or important elements without overwhelming the design. -->
+    <color name="muted_yellow">#FFF176</color>
+
+    <!-- Soft Red: Use sparingly for warnings, alerts, or negative actions like "Delete Recipe". -->
+    <color name="soft_red">#EF5350</color>
+
+    <!-- Neutral Colors -->
+    <!-- Light Beige: Ideal for the app background to create a soft, welcoming atmosphere. -->
+    <color name="light_beige">#F5F5DC</color>
+
+    <!-- Dark Grey: Use for primary text (like recipe titles or descriptions) to ensure good readability without harshness. -->
+    <color name="dark_grey">#424242</color>
+
+    <!-- Supporting Colors -->
+    <!-- Pastel Blue: A calming color suitable for notifications, subtle borders, or background elements. -->
+    <color name="pastel_blue">#81D4FA</color>
+
+    <!-- Standard Black and White for general use in text and backgrounds if needed. -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
