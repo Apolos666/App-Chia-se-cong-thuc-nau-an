@@ -28,4 +28,6 @@
     <!-- Standard Black and White for general use in text and backgrounds if needed. -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
 </resources>
