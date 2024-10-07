@@ -18,7 +18,6 @@
         <activity
             android:name=".activities.ChatActivity">
         </activity>
-
         <activity android:name=".activities.ProfileActivity"
             android:exported="true">
             <intent-filter>
