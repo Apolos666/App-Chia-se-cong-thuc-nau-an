@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_heart" />
+            android:src="@drawable/ic_heart1" />
     </RelativeLayout>
 
     <!-- Content including comments -->
@@ -84,7 +84,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_heart"
+                        android:src="@drawable/ic_heart1"
                         android:layout_marginEnd="8dp" />
 
                     <TextView
@@ -103,7 +103,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_comment"
+                        android:src="@drawable/ic_comment1"
                         android:layout_marginEnd="8dp" />
 
                     <TextView
@@ -171,6 +171,6 @@
             android:id="@+id/sendCommentButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_send" />
+            android:src="@drawable/ic_send1" />
     </LinearLayout>
 </LinearLayout>
