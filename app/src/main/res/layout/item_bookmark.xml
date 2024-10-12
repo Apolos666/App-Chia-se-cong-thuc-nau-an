@@ -3,14 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:background="?attr/selectableItemBackground"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp">
 
     <ImageView
+        android:id="@+id/bookmarkImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginRight="8dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/dish_image" />
+        android:background="@drawable/dish_image"
+        android:layout_marginRight="12dp" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,22 +26,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/textPrimary"
+            android:ellipsize="end"
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/bookmarkAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#888888"
-            android:textSize="14sp" />
-
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/moreAction"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_more_action" />
-
+        android:src="@drawable/ic_more_action"
+        android:layout_gravity="center_vertical" />
 </LinearLayout>

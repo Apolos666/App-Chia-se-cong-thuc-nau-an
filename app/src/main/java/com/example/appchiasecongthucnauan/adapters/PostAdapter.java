@@ -1,4 +1,4 @@
-package com.example.appchiasecongthucnauan.adaptors;
+package com.example.appchiasecongthucnauan.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
