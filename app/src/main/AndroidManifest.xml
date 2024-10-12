@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppChiasecongthucnauan"
         tools:targetApi="31">
         <activity
-            android:name=".activities.ChatActivity"
+            android:name=".activities.BookmarksActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
