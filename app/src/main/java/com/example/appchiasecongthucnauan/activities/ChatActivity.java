@@ -1,7 +1,6 @@
 package com.example.appchiasecongthucnauan.activities;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchiasecongthucnauan.R;
-import com.example.appchiasecongthucnauan.adaptors.ChatAdapter;
+import com.example.appchiasecongthucnauan.adapters.ChatAdapter;
 import com.example.appchiasecongthucnauan.models.ChatMessage;
 
 import java.util.ArrayList;

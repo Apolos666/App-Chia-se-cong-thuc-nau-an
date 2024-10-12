@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchiasecongthucnauan.R;
-import com.example.appchiasecongthucnauan.adaptors.PostAdapter;
+import com.example.appchiasecongthucnauan.adapters.PostAdapter;
 import com.example.appchiasecongthucnauan.custom.CustomBottomNavigationView;
 import com.example.appchiasecongthucnauan.models.Post;
 import com.google.android.material.navigation.NavigationBarView;

@@ -11,4 +11,25 @@
     <string name="bio">Bio</string>
     <string name="website">Website</string>
     <string name="social_media">Social Media</string>
+    <string name="my_bookmark">My Bookmarks</string>
+    <string name="search_bookmarks">Search bookmarks…</string>
+    <string name="my_collections">My Collections</string>
+    <string name="new_collection">+ New Collection</string>
+    <string name="all_bookmarks">All bookmarks</string>
+    <string name="type_a_message">Type a message...</string>
+    <string name="home_logo_text">CookBook</string>
+    <string name="search_recipes">Search recipes</string>
+    <string name="sign_in_to_your_account">Sign in to your account</string>
+    <string name="or_create_a_new_account">Or create a new account</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forget_your_password">Forget your password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="full_name">Full Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="choose_collection">Choose collection</string>
+    <string name="view_collection">View Collection</string>
 </resources>
