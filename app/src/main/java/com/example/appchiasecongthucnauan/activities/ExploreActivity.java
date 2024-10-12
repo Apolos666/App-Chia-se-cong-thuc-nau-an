@@ -2,7 +2,6 @@ package com.example.appchiasecongthucnauan.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,7 @@ import com.example.appchiasecongthucnauan.custom.CustomBottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.example.appchiasecongthucnauan.explore.ExploreViewPagerAdapter;
+import com.example.appchiasecongthucnauan.adapters.ExploreViewPagerAdapter;
 import com.example.appchiasecongthucnauan.R;
 public class ExploreActivity extends AppCompatActivity {
 

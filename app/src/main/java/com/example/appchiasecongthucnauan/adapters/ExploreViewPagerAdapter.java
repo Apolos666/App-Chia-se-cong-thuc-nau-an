@@ -1,9 +1,13 @@
-package com.example.appchiasecongthucnauan.explore;
+package com.example.appchiasecongthucnauan.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.appchiasecongthucnauan.fragments.RecentFragment;
+import com.example.appchiasecongthucnauan.fragments.CategoriesFragment;
+import com.example.appchiasecongthucnauan.fragments.TrendingFragment;
 
 public class ExploreViewPagerAdapter extends FragmentStateAdapter {
 

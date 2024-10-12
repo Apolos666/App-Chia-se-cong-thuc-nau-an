@@ -1,6 +1,6 @@
 
 
-package com.example.appchiasecongthucnauan.explore;
+package com.example.appchiasecongthucnauan.models;
 
 public class TrendingItem {
     private String title;

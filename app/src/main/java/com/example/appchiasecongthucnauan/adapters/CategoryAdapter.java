@@ -1,4 +1,4 @@
-package com.example.appchiasecongthucnauan.explore;
+package com.example.appchiasecongthucnauan.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.models.CategoryItem;
+
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {

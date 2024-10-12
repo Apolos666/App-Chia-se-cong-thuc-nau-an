@@ -1,4 +1,4 @@
-package com.example.appchiasecongthucnauan.explore;
+package com.example.appchiasecongthucnauan.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.models.RecentItem;
 
 import java.util.List;
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder> {

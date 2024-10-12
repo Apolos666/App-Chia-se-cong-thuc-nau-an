@@ -1,6 +1,9 @@
-package com.example.appchiasecongthucnauan.explore;
+package com.example.appchiasecongthucnauan.fragments;
 
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.adapters.TrendingAdapter;
+import com.example.appchiasecongthucnauan.models.TrendingItem;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

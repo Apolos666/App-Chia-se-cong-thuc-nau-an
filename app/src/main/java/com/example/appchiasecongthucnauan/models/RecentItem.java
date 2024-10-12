@@ -1,4 +1,4 @@
-package com.example.appchiasecongthucnauan.explore;
+package com.example.appchiasecongthucnauan.models;
 
 public class RecentItem {
     private String title;

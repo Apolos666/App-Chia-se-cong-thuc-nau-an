@@ -1,4 +1,4 @@
-package com.example.appchiasecongthucnauan.explore;
+package com.example.appchiasecongthucnauan.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.adapters.RecentAdapter;
+import com.example.appchiasecongthucnauan.models.RecentItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
