@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="Like"
-                android:src="@drawable/ic_heart1" />
+                android:src="@drawable/ic_heart_1" />
 
             <TextView
                 android:id="@+id/like_count"
@@ -67,7 +67,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="Comment"
-                android:src="@drawable/ic_comment1" />
+                android:src="@drawable/ic_comment_1" />
 
             <TextView
                 android:id="@+id/comment_count"

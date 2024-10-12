@@ -11,6 +11,8 @@
     <string name="bio">Bio</string>
     <string name="website">Website</string>
     <string name="social_media">Social Media</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_bookmark">My Bookmarks</string>
     <string name="search_bookmarks">Search bookmarks…</string>
     <string name="my_collections">My Collections</string>
