@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:drawable/editbox_background"
-            android:hint="Type a message..."
+            android:hint="@string/type_a_message"
             android:inputType="textMultiLine"
             android:padding="12dp" />
 
