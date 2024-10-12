@@ -35,7 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView tvHelpSupport = findViewById(R.id.tvHelpSupport);
 
         btnSignOut.setOnClickListener(v -> {
-            Toast.makeText(SettingsActivity.this, "Signing out...", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
 
         View.OnClickListener optionClickListener = v -> {
@@ -43,8 +44,20 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(SettingsActivity.this, option + " selected", Toast.LENGTH_SHORT).show();
         };
 
-        tvMyProfile.setOnClickListener(optionClickListener);
-        tvMyBookmark.setOnClickListener(optionClickListener);
+        tvMyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvMyBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, BookmarksActivity.class);
+                startActivity(intent);
+            }
+        });
         tvPrivacy.setOnClickListener(optionClickListener);
         tvHelpSupport.setOnClickListener(optionClickListener);
     }

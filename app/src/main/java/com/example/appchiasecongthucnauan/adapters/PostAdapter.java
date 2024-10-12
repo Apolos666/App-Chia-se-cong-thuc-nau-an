@@ -20,10 +20,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     private Context context;
     private List<Post> postList;
+    private OnPostClickListener onPostClickListener;
 
-    public PostAdapter(Context context, List<Post> postList) {
+    public interface OnPostClickListener {
+        void onPostClick(Post post);
+    }
+
+    public PostAdapter(Context context, List<Post> postList, OnPostClickListener onPostClickListener) {
         this.context = context;
         this.postList = postList;
+        this.onPostClickListener = onPostClickListener;
     }
 
     @NonNull
@@ -41,9 +47,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.likeCount.setText(String.valueOf(post.getLikeCount()));
         holder.commentCount.setText(String.valueOf(post.getCommentCount()));
 
-        // You can add image loading logic here if you have images from the internet.
-        // You can add image loading logic here if you have images from the internet.
-        // You can add image loading logic here if you have images from the internet.
+        holder.itemView.setOnClickListener(v -> {
+            if (onPostClickListener != null) {
+                onPostClickListener.onPostClick(post);
+            }
+        });
+
+        holder.viewRecipeBtn.setOnClickListener(v -> {
+            if (onPostClickListener != null) {
+                onPostClickListener.onPostClick(post);
+            }
+        });
 
     }
 

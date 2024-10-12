@@ -56,8 +56,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void setupRecipe() {
-        // In a real app, you'd get this data from an intent or a database
-        Recipe recipe = new Recipe("Pasta Carbonara", "Chef John", 256, 42);
+        String recipeNameStr = getIntent().getStringExtra("RECIPE_NAME");
+        String chefNameStr = getIntent().getStringExtra("CHEF_NAME");
+        int likesCountInt = getIntent().getIntExtra("LIKE_COUNT", 0);
+        int commentsCountInt = getIntent().getIntExtra("COMMENT_COUNT", 0);
+
+        Recipe recipe = new Recipe(recipeNameStr, chefNameStr, likesCountInt, commentsCountInt);
 
         recipeName.setText(recipe.getName());
         chefName.setText(recipe.getChef());

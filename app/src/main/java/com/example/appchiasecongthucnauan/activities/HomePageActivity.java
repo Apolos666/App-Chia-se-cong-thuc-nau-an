@@ -22,7 +22,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity implements PostAdapter.OnPostClickListener {
 
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
@@ -45,11 +45,16 @@ public class HomePageActivity extends AppCompatActivity {
         postList.add(new Post("Beef Stroganoff", "Chef Mike", 120, 25));
 
         // Initialize the adapter and set it to the RecyclerView
-        postAdapter = new PostAdapter(this, postList);
+        postAdapter = new PostAdapter(this, postList, this);
         recyclerView.setAdapter(postAdapter);
 
         // Initialize navigation
         initializeNavigation();
+
+        ImageView addRecipe = findViewById(R.id.add_recipe);
+        addRecipe.setOnClickListener(v -> {
+//            Intent intent = new Intent(HomePageActivity.this, AddRecipeActivity.class);
+        });
     }
 
     private void initializeNavigation() {
@@ -64,6 +69,7 @@ public class HomePageActivity extends AppCompatActivity {
                 if (itemId == R.id.navigation_home) {
                     return true;
                 } else if (itemId == R.id.navigation_explorer) {
+                    startActivity(new Intent(HomePageActivity.this, ExploreActivity.class));
                     return true;
                 } else if (itemId == R.id.navigation_profile) {
                     startActivity(new Intent(HomePageActivity.this, SettingsActivity.class));
@@ -80,6 +86,16 @@ public class HomePageActivity extends AppCompatActivity {
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         }
+    }
+
+    @Override
+    public void onPostClick(Post post) {
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra("RECIPE_NAME", post.getRecipeName());
+        intent.putExtra("CHEF_NAME", post.getChefName());
+        intent.putExtra("LIKE_COUNT", post.getLikeCount());
+        intent.putExtra("COMMENT_COUNT", post.getCommentCount());
+        startActivity(intent);
     }
 }
 

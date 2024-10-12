@@ -16,6 +16,7 @@ import com.example.appchiasecongthucnauan.models.Bookmark;
 import com.example.appchiasecongthucnauan.models.BookmarkCollection;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class BookmarksActivity extends AppCompatActivity {
     private List<BookmarkCollection> collections;
     private List<Bookmark> bookmarks;
     private BottomSheetDialog bottomSheetDialog;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class BookmarksActivity extends AppCompatActivity {
         newCollectionButton = findViewById(R.id.newCollectionButton);
         collectionsRecyclerView = findViewById(R.id.collectionsRecyclerView);
         bookmarksRecyclerView = findViewById(R.id.bookmarksRecyclerView);
+        backButton = findViewById(R.id.btnBack);
 
         // Initialize data
         collections = new ArrayList<>();
@@ -66,6 +69,8 @@ public class BookmarksActivity extends AppCompatActivity {
         newCollectionButton.setOnClickListener(v -> {
             // TODO: Implement new collection creation
         });
+
+        backButton.setOnClickListener(v -> finish());
     }
 
 //    private void showPopupMenu(Bookmark bookmark) {
