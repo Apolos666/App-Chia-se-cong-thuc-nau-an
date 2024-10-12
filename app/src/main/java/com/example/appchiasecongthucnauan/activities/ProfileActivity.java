@@ -2,6 +2,7 @@ package com.example.appchiasecongthucnauan.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PhotoAdapter adapter;
     private boolean isGridView = true;
+    private boolean isOwnProfile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +68,22 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         Button editProfileButton = findViewById(R.id.editProfileButton);
-        editProfileButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-            startActivity(intent);
-        });
+        Button chatButton = findViewById(R.id.chatButton);
+        if (isOwnProfile) {
+            editProfileButton.setVisibility(View.VISIBLE);
+            chatButton.setVisibility(View.GONE);
+            editProfileButton.setOnClickListener(v -> {
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+            });
+        } else {
+            editProfileButton.setVisibility(View.GONE);
+            chatButton.setVisibility(View.VISIBLE);
+            chatButton.setOnClickListener(v -> {
+                Intent intent = new Intent(ProfileActivity.this, ChatActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setGridLayout() {
