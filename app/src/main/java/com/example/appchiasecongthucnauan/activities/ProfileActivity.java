@@ -16,7 +16,6 @@ import com.example.appchiasecongthucnauan.adapters.PhotoAdapter;
 import com.example.appchiasecongthucnauan.models.Profile;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     private Profile profile;
