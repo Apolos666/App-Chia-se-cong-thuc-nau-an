@@ -34,4 +34,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="choose_collection">Choose collection</string>
     <string name="view_collection">View Collection</string>
+    <string name="i_agree_to_the_term_of_privacy_policy">I agree to the Term of Privacy Policy</string>
+    <string name="search_bookmark">Search bookmark</string>
+    <string name="view_recipe">View Recipe</string>
 </resources>
