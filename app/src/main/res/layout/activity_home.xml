@@ -37,12 +37,12 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         android:background="@drawable/rounded_search_bar"
         android:drawableLeft="@drawable/ic_search"
         android:hint="@string/search_recipes"
         android:inputType="text"
-        android:padding="12dp" />
+        android:padding="2dp" />
 
     <!-- RecyclerView for Posts -->
     <androidx.recyclerview.widget.RecyclerView
