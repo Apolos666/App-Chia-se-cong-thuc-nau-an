@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PhotoAdapter adapter;
     private boolean isGridView = true;
-    private boolean isOwnProfile = false;
+    private boolean isOwnProfile = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

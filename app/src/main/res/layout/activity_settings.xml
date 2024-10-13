@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:text="CookBook"
         android:textSize="24sp"
-        android:padding="16dp"
-        android:background="#EEEEEE"/>
+        android:padding="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
