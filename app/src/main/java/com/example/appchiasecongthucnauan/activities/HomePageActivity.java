@@ -53,7 +53,8 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
 
         ImageView addRecipe = findViewById(R.id.add_recipe);
         addRecipe.setOnClickListener(v -> {
-//            Intent intent = new Intent(HomePageActivity.this, AddRecipeActivity.class);
+            Intent intent = new Intent(HomePageActivity.this, CreateRecipeActivity.class);
+            startActivity(intent);
         });
     }
 
