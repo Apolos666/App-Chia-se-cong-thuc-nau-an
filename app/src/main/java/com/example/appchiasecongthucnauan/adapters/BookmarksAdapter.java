@@ -39,7 +39,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         Bookmark bookmark = bookmarks.get(position);
         holder.title.setText(bookmark.getTitle());
         holder.author.setText(bookmark.getAuthor());
-        holder.moreAction.setOnClickListener(view -> listener.onMoreAction(bookmark));
     }
 
     @Override
@@ -50,13 +49,11 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView author;
-        ImageView moreAction;
 
         ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.bookmarkTitle);
             author = itemView.findViewById(R.id.bookmarkAuthor);
-            moreAction = itemView.findViewById(R.id.moreAction);
         }
     }
 }

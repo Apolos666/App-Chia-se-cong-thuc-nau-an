@@ -22,6 +22,7 @@ public class ChatActivity extends AppCompatActivity {
     private List<ChatMessage> messageList;
     private EditText messageInput;
     private ImageButton sendButton;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,10 @@ public class ChatActivity extends AppCompatActivity {
 
         messageInput = findViewById(R.id.message_input);
         sendButton = findViewById(R.id.send_button);
+        backButton = findViewById(R.id.btnBack);
+
+        // Set up back button functionality
+        backButton.setOnClickListener(v -> finish());
 
         // Example messages
         messageList.add(new ChatMessage("Hey! I loved your latest recipe!", false, "10:30 AM"));
@@ -52,4 +57,3 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 }
-

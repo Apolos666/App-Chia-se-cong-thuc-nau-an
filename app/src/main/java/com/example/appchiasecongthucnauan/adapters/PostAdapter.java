@@ -47,11 +47,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.likeCount.setText(String.valueOf(post.getLikeCount()));
         holder.commentCount.setText(String.valueOf(post.getCommentCount()));
 
-        holder.itemView.setOnClickListener(v -> {
-            if (onPostClickListener != null) {
-                onPostClickListener.onPostClick(post);
-            }
-        });
+//        holder.itemView.setOnClickListener(v -> {
+//            if (onPostClickListener != null) {
+//                onPostClickListener.onPostClick(post);
+//            }
+//        });
 
         holder.viewRecipeBtn.setOnClickListener(v -> {
             if (onPostClickListener != null) {
