@@ -57,7 +57,7 @@ public class CreateRecipeActivity extends AppCompatActivity {
 
     private void addIngredientField() {
         EditText ingredientEditText = new EditText(this);
-        ingredientEditText.setHint("Ingredient " + (ingredientsLayout.getChildCount() + 1));
+        ingredientEditText.setHint("Nguyên liệu " + (ingredientsLayout.getChildCount() + 1));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

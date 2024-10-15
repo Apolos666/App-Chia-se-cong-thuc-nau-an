@@ -34,7 +34,7 @@
     <string name="confirm_password">Xác nhận mật khẩu</string>
     <string name="choose_collection">Chọn bộ sưu tập</string>
     <string name="view_collection">Xem bộ sưu tập</string>
-    <string name="i_agree_to_the_term_of_privacy_policy">Tôi đồng ý với <font color="#007BFF">Điều khoản và Chính sách bảo mật</font></string>
+    <string name="i_agree_to_the_term_of_privacy_policy">Tôi đồng ý với <font color="#007BFF">Chính sách bảo mật</font></string>
     <string name="search_bookmark">Tìm kiếm dấu trang</string>
     <string name="view_recipe">Xem công thức</string>
 </resources>
