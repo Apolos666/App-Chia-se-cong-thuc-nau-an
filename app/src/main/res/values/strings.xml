@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">AppChiasecongthucnauan</string>
-    <string name="already_have_account">Already have an account? <font color="#007BFF">Sign in</font></string>
-    <string name="edit_profile">Edit Profile</string>
-    <string name="save">Save</string>
-    <string name="back_button">Back</string>
-    <string name="change_photo">Change photo</string>
-    <string name="name">Name</string>
+    <string name="already_have_account">Đã có tài khoản? <font color="#007BFF">Đăng nhập</font></string>
+    <string name="edit_profile">Chỉnh sửa tài khoản</string>
+    <string name="save">Lưu</string>
+    <string name="back_button">Quay lại</string>
+    <string name="change_photo">Thay đổi ảnh</string>
+    <string name="name">Tên</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="bio">Bio</string>
@@ -13,28 +13,28 @@
     <string name="social_media">Social Media</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="my_bookmark">My Bookmarks</string>
-    <string name="search_bookmarks">Search bookmarks…</string>
-    <string name="my_collections">My Collections</string>
-    <string name="new_collection">+ New Collection</string>
-    <string name="all_bookmarks">All bookmarks</string>
-    <string name="type_a_message">Type a message...</string>
-    <string name="home_logo_text">CookBook</string>
-    <string name="search_recipes">Search recipes</string>
-    <string name="sign_in_to_your_account">Sign in to your account</string>
-    <string name="or_create_a_new_account">Or <font color="#007BFF">create a new account</font></string>
-    <string name="email_address">Email Address</string>
-    <string name="password">Password</string>
-    <string name="remember_me">Remember Me</string>
-    <string name="forget_your_password"><font color="#007BFF">Forget your password?</font></string>
-    <string name="sign_in">Sign In</string>
-    <string name="create_your_account">Create your account</string>
-    <string name="full_name">Full Name</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="confirm_password">Confirm password</string>
-    <string name="choose_collection">Choose collection</string>
-    <string name="view_collection">View Collection</string>
-    <string name="i_agree_to_the_term_of_privacy_policy">I agree to the <font color="#007BFF">Term of Privacy Policy</font></string>
-    <string name="search_bookmark">Search bookmark</string>
-    <string name="view_recipe">View Recipe</string>
+    <string name="my_bookmark">Dấu trang của tôi</string>
+    <string name="search_bookmarks">Tìm kiếm dấu trang…</string>
+    <string name="my_collections">Bộ sưu tập của tôi</string>
+    <string name="new_collection">+ Bộ sưu tập mới</string>
+    <string name="all_bookmarks">Tất cả dấu trang</string>
+    <string name="type_a_message">Nhập tin nhắn...</string>
+    <string name="home_logo_text">Cookbook</string>
+    <string name="search_recipes">Tìm kiếm công thức</string>
+    <string name="sign_in_to_your_account">Đăng nhập</string>
+    <string name="or_create_a_new_account">Hoặc <font color="#007BFF">tạo tài khoản mới</font></string>
+    <string name="email_address">Địa chỉ email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="remember_me">Ghi nhớ đăng nhập</string>
+    <string name="forget_your_password"><font color="#007BFF">Quên mật khẩu?</font></string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="create_your_account">Tạo tài khoản của bạn</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="choose_collection">Chọn bộ sưu tập</string>
+    <string name="view_collection">Xem bộ sưu tập</string>
+    <string name="i_agree_to_the_term_of_privacy_policy">Tôi đồng ý với <font color="#007BFF">Điều khoản và Chính sách bảo mật</font></string>
+    <string name="search_bookmark">Tìm kiếm dấu trang</string>
+    <string name="view_recipe">Xem công thức</string>
 </resources>

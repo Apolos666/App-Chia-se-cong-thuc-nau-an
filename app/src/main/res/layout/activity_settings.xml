@@ -52,7 +52,7 @@
             android:id="@+id/tvMyProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Profile"
+            android:text="Trang cá nhân"
             android:padding="16dp"
             android:drawableEnd="@drawable/ic_arrow_right"/>
 
@@ -60,7 +60,7 @@
             android:id="@+id/tvMyBookmark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Bookmark"
+            android:text="Dấu trang của tôi"
             android:padding="16dp"
             android:drawableEnd="@drawable/ic_arrow_right"/>
 
@@ -68,7 +68,7 @@
             android:id="@+id/tvPrivacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Privacy"
+            android:text="Chính sách"
             android:padding="16dp"
             android:drawableEnd="@drawable/ic_arrow_right"/>
 
@@ -76,7 +76,7 @@
             android:id="@+id/tvHelpSupport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Help and Support"
+            android:text="Hỗ trợ"
             android:padding="16dp"
             android:drawableEnd="@drawable/ic_arrow_right"/>
     </LinearLayout>
@@ -90,7 +90,7 @@
         android:id="@+id/btnSignOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign out"
+        android:text="Đăng xuất"
         android:layout_margin="16dp"/>
 
     <com.example.appchiasecongthucnauan.custom.CustomBottomNavigationView

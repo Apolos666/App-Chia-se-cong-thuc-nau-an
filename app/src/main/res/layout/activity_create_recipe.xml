@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Create Recipe"
+            android:text="Tạo công thức"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center" />
@@ -33,7 +33,7 @@
             android:id="@+id/publishButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Publish"
+            android:text="Đăng"
             android:textColor="#FFFFFF"
             android:backgroundTint="#000000" />
     </LinearLayout>
@@ -58,13 +58,13 @@
                 android:id="@+id/recipeNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter recipe title"
+                android:hint="Nhập tiêu đề"
                 android:layout_marginTop="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="Mô tả"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp" />
 
@@ -72,7 +72,7 @@
                 android:id="@+id/recipeDescriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Describe your recipe"
+                android:hint="Mô tả công thức của bạn"
                 android:layout_marginTop="8dp"
                 android:minLines="3"
                 android:gravity="top" />
@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Photo"
+                android:text="Ảnh"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp" />
 
@@ -100,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingredients"
+                android:text="Nguyên liệu"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp" />
 
@@ -116,13 +116,13 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ingredient 1"
+                    android:hint="Nguyên liệu 1"
                     android:layout_marginTop="8dp" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ingredient 2"
+                    android:hint="Nguyên liệu 2"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
 
@@ -130,7 +130,7 @@
                 android:id="@+id/addIngredientButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+ Add ingredient"
+                android:text="+ Thêm công thức"
                 android:textColor="#000000"
                 android:backgroundTint="#FFFFFF"
                 android:layout_marginTop="8dp" />

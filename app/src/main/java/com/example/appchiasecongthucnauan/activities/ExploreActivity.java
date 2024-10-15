@@ -72,13 +72,13 @@ public class ExploreActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Trending");
+                    tab.setText("Xu Hướng");
                     break;
                 case 1:
-                    tab.setText("Recent");
+                    tab.setText("Gần đây");
                     break;
                 case 2:
-                    tab.setText("Categories");
+                    tab.setText("Thể loại");
                     break;
             }
         }).attach();

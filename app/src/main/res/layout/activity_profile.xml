@@ -63,7 +63,7 @@
                 android:id="@+id/followButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Follow" />
+                android:text="Theo dõi" />
 
         </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="250\nRecipes" />
+                android:text="250\n Công thức" />
 
             <TextView
                 android:id="@+id/followersCount"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="15.2k\nFollowers" />
+                android:text="15.2k\n Người theo dõi" />
 
             <TextView
                 android:id="@+id/followingCount"
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="1.2k\nFollowing" />
+                android:text="1.2k\n Đang theo dõi" />
 
         </LinearLayout>
 
@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Edit Profile" />
+            android:text="Chỉnh sửa thông tin" />
 
         <Button
             android:id="@+id/chatButton"
