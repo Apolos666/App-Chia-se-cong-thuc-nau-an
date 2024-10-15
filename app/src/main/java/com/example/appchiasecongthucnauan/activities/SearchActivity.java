@@ -68,6 +68,7 @@ public class SearchActivity extends AppCompatActivity {
                     startActivity(new Intent(SearchActivity.this, HomePageActivity.class));
                     return true;
                 } else if (itemId == R.id.navigation_explorer) {
+                    startActivity(new Intent(SearchActivity.this, ExploreActivity.class));
                     return true;
                 } else if (itemId == R.id.navigation_profile) {
                     startActivity(new Intent(SearchActivity.this, SettingsActivity.class));

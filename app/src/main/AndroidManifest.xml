@@ -17,8 +17,15 @@
         tools:targetApi="31">
         <activity android:name=".activities.LoginActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activities.RegisterActivity"
+            android:exported="true">
+        </activity>
+        <activity android:name=".activities.ExploreActivity"
             android:exported="true">
         </activity>
         <activity android:name=".activities.HomePageActivity"
@@ -48,10 +55,6 @@
 
         <activity android:name=".activities.SearchActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.CreateRecipeActivity"
             android:exported="true">

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,14 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
 
         ImageView addRecipe = findViewById(R.id.add_recipe);
         addRecipe.setOnClickListener(v -> {
-//            Intent intent = new Intent(HomePageActivity.this, AddRecipeActivity.class);
+            Intent intent = new Intent(HomePageActivity.this, CreateRecipeActivity.class);
+            startActivity(intent);
+        });
+
+        EditText searchEditText = findViewById(R.id.search_bar);
+        searchEditText.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePageActivity.this, SearchActivity.class);
+            startActivity(intent);
         });
     }
 
