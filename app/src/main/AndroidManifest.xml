@@ -50,12 +50,12 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".activities.ExploreActivity"
+        <activity android:name=".activities.SearchActivity"
             android:exported="true">
+
         </activity>
         <activity android:name=".activities.CreateRecipeActivity"
             android:exported="true">
-
         </activity>
 
         <activity android:name=".MainActivity" />
