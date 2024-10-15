@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.models.User;
@@ -45,5 +46,14 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public void setUsers(List<User> newUsers) {
         users = newUsers;
         notifyDataSetChanged();
+    }
+
+    private boolean isAscending = true;
+
+    public void toggleSortOrder() {
+        isAscending = !isAscending;
+        Collections.sort(users, (u1, u2) ->
+                isAscending ? u1.getName().compareTo(u2.getName()) : u2.getName().compareTo(u1.getName())
+        );
     }
 }
