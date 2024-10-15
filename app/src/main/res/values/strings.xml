@@ -22,11 +22,11 @@
     <string name="home_logo_text">CookBook</string>
     <string name="search_recipes">Search recipes</string>
     <string name="sign_in_to_your_account">Sign in to your account</string>
-    <string name="or_create_a_new_account">Or create a new account</string>
+    <string name="or_create_a_new_account">Or <font color="#007BFF">create a new account</font></string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="remember_me">Remember Me</string>
-    <string name="forget_your_password">Forget your password?</string>
+    <string name="forget_your_password"><font color="#007BFF">Forget your password?</font></string>
     <string name="sign_in">Sign In</string>
     <string name="create_your_account">Create your account</string>
     <string name="full_name">Full Name</string>
@@ -34,4 +34,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="choose_collection">Choose collection</string>
     <string name="view_collection">View Collection</string>
+    <string name="i_agree_to_the_term_of_privacy_policy">I agree to the <font color="#007BFF">Term of Privacy Policy</font></string>
+    <string name="search_bookmark">Search bookmark</string>
+    <string name="view_recipe">View Recipe</string>
 </resources>
