@@ -8,12 +8,14 @@ public class Post {
     private String chefName;
     private int likeCount;
     private int commentCount;
+    private String mediaUrl;
 
-    public Post(String recipeName, String chefName, int likeCount, int commentCount) {
+    public Post(String recipeName, String chefName, int likeCount, int commentCount, String mediaUrl) {
         this.recipeName = recipeName;
         this.chefName = chefName;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
+        this.mediaUrl = mediaUrl;
     }
 
     public String getRecipeName() {
@@ -31,5 +33,8 @@ public class Post {
     public int getCommentCount() {
         return commentCount;
     }
-}
 
+    public String getMediaUrl() {
+        return mediaUrl;
+    }
+}

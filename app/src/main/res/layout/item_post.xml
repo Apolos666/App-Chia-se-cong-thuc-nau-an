@@ -7,13 +7,22 @@
     android:orientation="vertical">
 
     <!-- Recipe Image -->
-    <ImageView
-        android:id="@+id/recipe_image"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:contentDescription="IMAGE"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dish_image" />
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/recipe_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <VideoView
+            android:id="@+id/recipe_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </FrameLayout>
 
     <!-- Recipe Info -->
     <LinearLayout
