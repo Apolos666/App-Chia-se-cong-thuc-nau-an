@@ -27,7 +27,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private OnPostClickListener onPostClickListener;
 
     public interface OnPostClickListener {
-        void onPostClick(Post post);
+        void onPostClick(String recipeId);
     }
 
     public PostAdapter(Context context, List<Post> postList, OnPostClickListener onPostClickListener) {
@@ -79,7 +79,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         holder.viewRecipeBtn.setOnClickListener(v -> {
             if (onPostClickListener != null) {
-                onPostClickListener.onPostClick(post);
+                onPostClickListener.onPostClick(post.getId());
             }
         });
     }

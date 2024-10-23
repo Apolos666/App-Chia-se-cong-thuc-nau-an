@@ -44,6 +44,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         notifyItemInserted(comments.size() - 1);
     }
 
+    public void setComments(List<Comment> newComments) {
+        this.comments = newComments;
+        notifyDataSetChanged();
+    }
+
     static class CommentViewHolder extends RecyclerView.ViewHolder {
         private ImageView userAvatar;
         private TextView userNameText;

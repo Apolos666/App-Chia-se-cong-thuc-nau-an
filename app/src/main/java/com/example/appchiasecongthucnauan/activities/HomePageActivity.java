@@ -113,13 +113,8 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
     }
 
     @Override
-    public void onPostClick(Post post) {
-        Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra("RECIPE_NAME", post.getRecipeName());
-        intent.putExtra("CHEF_NAME", post.getChefName());
-        intent.putExtra("LIKE_COUNT", post.getLikeCount());
-        intent.putExtra("COMMENT_COUNT", post.getCommentCount());
-        startActivity(intent);
+    public void onPostClick(String recipeId) {
+        RecipeDetailActivity.start(this, recipeId);
     }
 
     private void fetchRecipes() {
@@ -163,7 +158,8 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
             String mediaUrl = recipe.getMediaUrls() != null && !recipe.getMediaUrls().isEmpty()
                     ? recipe.getMediaUrls().get(0)
                     : null;
-            Post post = new Post(recipe.getTitle(), recipe.getUserName(), recipe.getLikesCount(),
+            Post post = new Post(recipe.getId().toString(), recipe.getTitle(), recipe.getUserName(),
+                    recipe.getLikesCount(),
                     recipe.getComments().size(), mediaUrl);
             postList.add(post);
             Log.d("HomePageActivity", "Đã thêm post: " + post.getRecipeName() +

@@ -15,6 +15,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Header;
 import java.util.List;
 import okhttp3.RequestBody;
+import retrofit2.http.Path;
 
 public interface ApiService {
     @POST("auth/register")
@@ -38,4 +39,7 @@ public interface ApiService {
 
     @GET("api/recipes")
     Call<List<RecipeDto>> getRecipes();
+
+    @GET("api/recipes/{id}")
+    Call<RecipeDto> getRecipe(@Path("id") String recipeId);
 }
