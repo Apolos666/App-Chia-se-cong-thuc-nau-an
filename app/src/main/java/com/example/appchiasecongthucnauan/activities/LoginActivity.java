@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.LoginDto;
+import com.example.appchiasecongthucnauan.models.UserDto;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,17 +82,13 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                progressBar.setVisibility(View.GONE);
-                btnLogin.setEnabled(true);
-
                 if (response.isSuccessful()) {
                     String token = response.body();
                     saveToken(token);
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                    startActivity(intent);
-                    finish();
+                    fetchUserData(token);
                 } else {
+                    progressBar.setVisibility(View.GONE);
+                    btnLogin.setEnabled(true);
                     Toast.makeText(LoginActivity.this, "Đăng nhập thất bại: " + response.message(), Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -110,6 +107,46 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
+        editor.apply();
+    }
+
+    private void fetchUserData(String token) {
+        Call<UserDto> call = apiService.getUser("Bearer " + token);
+        call.enqueue(new Callback<UserDto>() {
+            @Override
+            public void onResponse(Call<UserDto> call, Response<UserDto> response) {
+                progressBar.setVisibility(View.GONE);
+                btnLogin.setEnabled(true);
+
+                if (response.isSuccessful() && response.body() != null) {
+                    UserDto user = response.body();
+                    saveUserData(user);
+                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Không thể lấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDto> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                btnLogin.setEnabled(true);
+                Toast.makeText(LoginActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void saveUserData(UserDto user) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userId", user.getId().toString());
+        editor.putString("userEmail", user.getEmail());
+        editor.putString("userName", user.getName());
+        editor.putString("userBio", user.getBio());
+        editor.putString("userSocialMedia", user.getSocialMedia());
         editor.apply();
     }
 }

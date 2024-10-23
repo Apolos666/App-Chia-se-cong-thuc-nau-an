@@ -4,6 +4,7 @@ import com.example.appchiasecongthucnauan.models.LoginDto;
 import com.example.appchiasecongthucnauan.models.RegisterDto;
 import com.example.appchiasecongthucnauan.models.RecipeCategoryDto;
 import com.example.appchiasecongthucnauan.models.RecipeDto;
+import com.example.appchiasecongthucnauan.models.UserDto;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -18,11 +19,14 @@ import okhttp3.RequestBody;
 import retrofit2.http.Path;
 
 public interface ApiService {
-    @POST("auth/register")
+    @POST("api/auth/register")
     Call<String> register(@Body RegisterDto registerDto);
 
-    @POST("auth/login")
+    @POST("api/auth/login")
     Call<String> login(@Body LoginDto loginDto);
+
+    @GET("api/auth/user")
+    Call<UserDto> getUser(@Header("Authorization") String token);
 
     @GET("api/recipe-categories")
     Call<List<RecipeCategoryDto>> getRecipeCategories();
