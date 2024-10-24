@@ -62,8 +62,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         }
 
         void bind(Comment comment) {
-            // Here you can set a real avatar image if available
-            // userAvatar.setImageResource(R.drawable.ic_user_avatar);
             userNameText.setText(comment.getUserName());
             contentText.setText(comment.getContent());
         }

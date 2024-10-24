@@ -5,6 +5,8 @@ import com.example.appchiasecongthucnauan.models.RegisterDto;
 import com.example.appchiasecongthucnauan.models.RecipeCategoryDto;
 import com.example.appchiasecongthucnauan.models.RecipeDto;
 import com.example.appchiasecongthucnauan.models.UserDto;
+import com.example.appchiasecongthucnauan.models.CommentDto;
+import com.example.appchiasecongthucnauan.models.CreateCommentRequest;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -46,4 +48,7 @@ public interface ApiService {
 
     @GET("api/recipes/{id}")
     Call<RecipeDto> getRecipe(@Path("id") String recipeId);
+
+    @POST("api/comments")
+    Call<CommentDto> createComment(@Header("Authorization") String token, @Body CreateCommentRequest request);
 }
