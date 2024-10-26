@@ -20,6 +20,7 @@ import com.example.appchiasecongthucnauan.adapters.PhotoAdapter;
 import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.user.UserDto;
 import com.example.appchiasecongthucnauan.models.user.RecipeDto;
+import com.example.appchiasecongthucnauan.models.userfollow.FollowStatusResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String token;
     private String currentUserId;
     private String userName;
+    private boolean isFollowing = false;
 
     private static final String TAG = "ProfileActivity";
 
@@ -50,23 +52,20 @@ public class ProfileActivity extends AppCompatActivity {
         String userId = getIntent().getStringExtra("USER_ID");
         setupRetrofit();
 
-        // Lấy userId của người dùng hiện tại từ SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         currentUserId = sharedPreferences.getString("userId", "");
-
-        // Log giá trị của userId và currentUserId
-        Log.d(TAG, "userId từ Intent: " + userId);
-        Log.d(TAG, "currentUserId từ SharedPreferences: " + currentUserId);
+        token = sharedPreferences.getString("token", "");
 
         if (userId != null) {
-            // Kiểm tra xem profile này có phải của người dùng hiện tại không
             isOwnProfile = userId.trim().equals(currentUserId.trim());
             Log.d(TAG, "isOwnProfile: " + isOwnProfile);
 
-            // Gọi setupViews với isOwnProfile
             setupViews(isOwnProfile);
-
             loadUserProfile(userId);
+
+            if (!isOwnProfile) {
+                updateFollowStatus();
+            }
         } else {
             Log.e(TAG, "userId từ Intent là null");
             Toast.makeText(this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
@@ -81,9 +80,6 @@ public class ProfileActivity extends AppCompatActivity {
                 .build();
 
         apiService = retrofit.create(ApiService.class);
-
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        token = sharedPreferences.getString("token", "");
     }
 
     private void setupViews(boolean isOwnProfile) {
@@ -107,10 +103,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        Button followButton = findViewById(R.id.followButton);
         Button editProfileButton = findViewById(R.id.editProfileButton);
         Button chatButton = findViewById(R.id.chatButton);
 
         if (isOwnProfile) {
+            followButton.setVisibility(View.GONE);
             editProfileButton.setVisibility(View.VISIBLE);
             chatButton.setVisibility(View.GONE);
             editProfileButton.setOnClickListener(v -> {
@@ -119,8 +117,11 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         } else {
+            followButton.setVisibility(View.VISIBLE);
             editProfileButton.setVisibility(View.GONE);
             chatButton.setVisibility(View.VISIBLE);
+
+            followButton.setOnClickListener(v -> toggleFollow());
             chatButton.setOnClickListener(v -> {
                 Intent intent = new Intent(ProfileActivity.this, ChatActivity.class);
                 intent.putExtra("RECIPIENT_ID", getIntent().getStringExtra("USER_ID"));
@@ -128,6 +129,8 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.putExtra("RECIPIENT_NAME", userName);
                 startActivity(intent);
             });
+
+            updateFollowStatus();
         }
     }
 
@@ -198,5 +201,81 @@ public class ProfileActivity extends AppCompatActivity {
         if (adapter != null) {
             adapter.setViewType(PhotoAdapter.VIEW_TYPE_LIST);
         }
+    }
+
+    private void toggleFollow() {
+        String userId = getIntent().getStringExtra("USER_ID");
+        if (isFollowing) {
+            unfollowUser(userId);
+        } else {
+            followUser(userId);
+        }
+    }
+
+    private void followUser(String userId) {
+        Call<Void> call = apiService.followUser(userId, "Bearer " + token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    isFollowing = true;
+                    updateFollowButtonText();
+                    Toast.makeText(ProfileActivity.this, "Đã theo dõi người dùng", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Không thể theo dõi người dùng", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ProfileActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void unfollowUser(String userId) {
+        Call<Void> call = apiService.unfollowUser(userId, "Bearer " + token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    isFollowing = false;
+                    updateFollowButtonText();
+                    Toast.makeText(ProfileActivity.this, "Đã hủy theo dõi người dùng", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Không thể hủy theo dõi người dùng", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ProfileActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateFollowStatus() {
+        String userId = getIntent().getStringExtra("USER_ID");
+        Call<FollowStatusResponse> call = apiService.getFollowStatus(userId, "Bearer " + token);
+        call.enqueue(new Callback<FollowStatusResponse>() {
+            @Override
+            public void onResponse(Call<FollowStatusResponse> call, Response<FollowStatusResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    isFollowing = response.body().isFollowing();
+                    updateFollowButtonText();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FollowStatusResponse> call, Throwable t) {
+                Toast.makeText(ProfileActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateFollowButtonText() {
+        Button followButton = findViewById(R.id.followButton);
+        followButton.setText(isFollowing ? "Bỏ theo dõi" : "Theo dõi");
     }
 }

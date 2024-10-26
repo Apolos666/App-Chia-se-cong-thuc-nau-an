@@ -11,6 +11,7 @@ import com.example.appchiasecongthucnauan.models.CreateCommentRequest;
 import com.example.appchiasecongthucnauan.models.SendMessageRequest;
 import com.example.appchiasecongthucnauan.models.ConversationDto;
 import com.example.appchiasecongthucnauan.models.MessageDto;
+import com.example.appchiasecongthucnauan.models.userfollow.FollowStatusResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -19,6 +20,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.DELETE;
 import retrofit2.http.Part;
 import retrofit2.http.Header;
 import java.util.List;
@@ -77,4 +79,13 @@ public interface ApiService {
         @GET("api/chat/messages/{conversationId}")
         Call<List<MessageDto>> getMessages(@Header("Authorization") String token,
                         @Path("conversationId") String conversationId);
+
+        @POST("api/users-follow/{id}/follow")
+        Call<Void> followUser(@Path("id") String userId, @Header("Authorization") String token);
+
+        @DELETE("api/users-follow/{id}/unfollow")
+        Call<Void> unfollowUser(@Path("id") String userId, @Header("Authorization") String token);
+
+        @GET("api/users-follow/{id}/follow-status")
+        Call<FollowStatusResponse> getFollowStatus(@Path("id") String userId, @Header("Authorization") String token);
 }
