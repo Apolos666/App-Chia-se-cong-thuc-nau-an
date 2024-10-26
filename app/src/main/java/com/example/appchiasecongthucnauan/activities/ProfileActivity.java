@@ -38,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ApiService apiService;
     private String token;
     private String currentUserId;
+    private String userName;
 
     private static final String TAG = "ProfileActivity";
 
@@ -114,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
             chatButton.setVisibility(View.GONE);
             editProfileButton.setOnClickListener(v -> {
                 Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                intent.putExtra("CURRENT_USER_ID", currentUserId);
                 startActivity(intent);
             });
         } else {
@@ -122,6 +124,8 @@ public class ProfileActivity extends AppCompatActivity {
             chatButton.setOnClickListener(v -> {
                 Intent intent = new Intent(ProfileActivity.this, ChatActivity.class);
                 intent.putExtra("RECIPIENT_ID", getIntent().getStringExtra("USER_ID"));
+                intent.putExtra("CURRENT_USER_ID", currentUserId);
+                intent.putExtra("RECIPIENT_NAME", userName);
                 startActivity(intent);
             });
         }
@@ -134,6 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(Call<UserDto> call, Response<UserDto> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     updateUI(response.body());
+                    userName = response.body().getName();
                 } else {
                     Toast.makeText(ProfileActivity.this, "Không thể tải thông tin người dùng", Toast.LENGTH_SHORT)
                             .show();

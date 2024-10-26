@@ -7,6 +7,9 @@ import com.example.appchiasecongthucnauan.models.RecipeCategoryDto;
 import com.example.appchiasecongthucnauan.models.user.UserDto;
 import com.example.appchiasecongthucnauan.models.CommentDto;
 import com.example.appchiasecongthucnauan.models.CreateCommentRequest;
+import com.example.appchiasecongthucnauan.models.SendMessageRequest;
+import com.example.appchiasecongthucnauan.models.ConversationDto;
+import com.example.appchiasecongthucnauan.models.MessageDto;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -19,6 +22,7 @@ import retrofit2.http.Header;
 import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
     @POST("api/auth/register")
@@ -54,4 +58,17 @@ public interface ApiService {
 
     @GET("api/users/{id}")
     Call<UserDto> getUserById(@Path("id") String userId, @Header("Authorization") String token);
+
+    @POST("api/chat/start")
+    Call<String> startConversation(@Header("Authorization") String token, @Query("recipientId") String recipientId);
+
+    @POST("api/chat/send")
+    Call<Void> sendMessage(@Header("Authorization") String token, @Body SendMessageRequest request);
+
+    @GET("api/chat/conversations")
+    Call<List<ConversationDto>> getConversations(@Header("Authorization") String token);
+
+    @GET("api/chat/messages/{conversationId}")
+    Call<List<MessageDto>> getMessages(@Header("Authorization") String token,
+            @Path("conversationId") String conversationId);
 }

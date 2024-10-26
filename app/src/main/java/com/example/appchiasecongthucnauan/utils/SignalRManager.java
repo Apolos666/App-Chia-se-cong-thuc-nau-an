@@ -2,6 +2,7 @@ package com.example.appchiasecongthucnauan.utils;
 
 import android.util.Log;
 
+import com.microsoft.signalr.Action4;
 import com.microsoft.signalr.HubConnection;
 import com.microsoft.signalr.HubConnectionBuilder;
 import com.microsoft.signalr.HubConnectionState;
@@ -91,6 +92,13 @@ public class SignalRManager {
         HubConnection hubConnection = hubConnections.get(hubName);
         if (hubConnection != null) {
             hubConnection.on(eventName, callback, String.class, String.class, String.class);
+        }
+    }
+
+    public void on(String hubName, String eventName, Action4<String, String, String, String> callback) {
+        HubConnection hubConnection = hubConnections.get(hubName);
+        if (hubConnection != null) {
+            hubConnection.on(eventName, callback, String.class, String.class, String.class, String.class);
         }
     }
 

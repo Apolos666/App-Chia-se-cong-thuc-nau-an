@@ -1,6 +1,7 @@
 package com.example.appchiasecongthucnauan.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.models.ChatMessage;
+import com.example.appchiasecongthucnauan.models.MessageDto;
 
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
 
@@ -66,5 +71,33 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             timeText = itemView.findViewById(R.id.time_text);
         }
     }
-}
 
+    public void addMessage(MessageDto message) {
+        messageList.add(new ChatMessage(
+                message.getContent(),
+                message.getSenderId().equals(getCurrentUserId()),
+                formatDate(message.getSentAt())));
+        notifyItemInserted(messageList.size() - 1);
+    }
+
+    public void setMessages(List<MessageDto> messages) {
+        messageList.clear();
+        for (MessageDto message : messages) {
+            messageList.add(new ChatMessage(
+                    message.getContent(),
+                    message.getSenderId().equals(getCurrentUserId()),
+                    formatDate(message.getSentAt())));
+        }
+        notifyDataSetChanged();
+    }
+
+    private String getCurrentUserId() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("userId", "");
+    }
+
+    private String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return sdf.format(date);
+    }
+}
