@@ -20,11 +20,19 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     private Context context;
     private List<String> mediaUrls;
+    private List<String> recipeIds;
     private int viewType = VIEW_TYPE_GRID;
+    private OnItemClickListener listener;
 
-    public PhotoAdapter(Context context, List<String> mediaUrls) {
+    public interface OnItemClickListener {
+        void onItemClick(String recipeId);
+    }
+
+    public PhotoAdapter(Context context, List<String> mediaUrls, List<String> recipeIds, OnItemClickListener listener) {
         this.context = context;
         this.mediaUrls = mediaUrls;
+        this.recipeIds = recipeIds;
+        this.listener = listener;
     }
 
     public void setViewType(int viewType) {
@@ -52,6 +60,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.ic_error)
                 .into(holder.imageView);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null && position < recipeIds.size()) {
+                listener.onItemClick(recipeIds.get(position));
+            }
+        });
     }
 
     @Override

@@ -169,14 +169,16 @@ public class ProfileActivity extends AppCompatActivity {
         followingCount.setText(user.getFollowing().size() + "\nĐang theo dõi");
 
         List<String> mediaUrls = new ArrayList<>();
+        List<String> recipeIds = new ArrayList<>();
         for (RecipeDto recipe : user.getRecipes()) {
             String imageUrl = getFirstImageUrl(recipe.getMediaUrls());
             if (imageUrl != null) {
                 mediaUrls.add(imageUrl);
+                recipeIds.add(recipe.getId().toString());
             }
         }
 
-        adapter = new PhotoAdapter(this, mediaUrls);
+        adapter = new PhotoAdapter(this, mediaUrls, recipeIds, this::onRecipeClick);
         recyclerView.setAdapter(adapter);
     }
 
@@ -277,5 +279,11 @@ public class ProfileActivity extends AppCompatActivity {
     private void updateFollowButtonText() {
         Button followButton = findViewById(R.id.followButton);
         followButton.setText(isFollowing ? "Bỏ theo dõi" : "Theo dõi");
+    }
+
+    private void onRecipeClick(String recipeId) {
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra("RECIPE_ID", recipeId);
+        startActivity(intent);
     }
 }
