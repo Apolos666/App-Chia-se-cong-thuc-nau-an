@@ -1,6 +1,7 @@
 package com.example.appchiasecongthucnauan.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -48,6 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingsActivity.this, ProfileActivity.class);
+                SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                intent.putExtra("USER_ID", sharedPreferences.getString("userId", ""));
                 startActivity(intent);
             }
         });

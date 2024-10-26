@@ -50,155 +50,114 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content">
 
-            <!-- Profile Image -->
-            <FrameLayout
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp">
-
-                <ImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/circle_background"
-                    android:padding="2dp"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"/>
-
-                <ImageButton
-                    android:id="@+id/btnChangePhoto"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="bottom|end"
-                    android:background="@drawable/circle_background"
-                    android:src="@drawable/ic_camera"
-                    android:padding="8dp"
-                    android:contentDescription="@string/change_photo"/>
-            </FrameLayout>
-
-            <!-- Form Fields -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <!-- Name Field -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/name"
-                    android:textColor="@color/textPrimary"
-                    android:layout_marginBottom="4dp"/>
+                <!-- Profile Image -->
+                <FrameLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="24dp">
 
-                <EditText
-                    android:id="@+id/editName"
+                    <ImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/circle_background"
+                        android:padding="2dp"
+                        android:clipToOutline="true"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageButton
+                        android:id="@+id/btnChangePhoto"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="bottom|end"
+                        android:background="@drawable/circle_background"
+                        android:src="@drawable/ic_camera"
+                        android:padding="8dp"
+                        android:contentDescription="@string/change_photo"/>
+                </FrameLayout>
+
+                <!-- Form Fields -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp"
-                    android:inputType="textPersonName"
-                    android:hint="Enter your name"/>
+                    android:orientation="vertical">
 
-                <!-- Username Field -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/username"
-                    android:textColor="@color/textPrimary"
-                    android:layout_marginBottom="4dp"/>
+                    <!-- Name Field -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name"
+                        android:textColor="@color/textPrimary"
+                        android:layout_marginBottom="4dp"/>
 
-                <EditText
-                    android:id="@+id/editUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp"
-                    android:inputType="text"
-                    android:hint="Enter username"/>
+                    <EditText
+                        android:id="@+id/editName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:inputType="textPersonName"
+                        android:hint="Enter your name"/>
 
-                <!-- Email Field -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email"
-                    android:textColor="@color/textPrimary"
-                    android:layout_marginBottom="4dp"/>
+                    <!-- Bio Field -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bio"
+                        android:textColor="@color/textPrimary"
+                        android:layout_marginBottom="4dp"/>
 
-                <EditText
-                    android:id="@+id/editEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp"
-                    android:inputType="textEmailAddress"
-                    android:hint="Enter email"/>
+                    <EditText
+                        android:id="@+id/editBio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:gravity="top"
+                        android:hint="Write something about yourself"/>
 
-                <!-- Bio Field -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/bio"
-                    android:textColor="@color/textPrimary"
-                    android:layout_marginBottom="4dp"/>
+                    <!-- Social Media Field -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/social_media"
+                        android:textColor="@color/textPrimary"
+                        android:layout_marginBottom="4dp"/>
 
-                <EditText
-                    android:id="@+id/editBio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:gravity="top"
-                    android:hint="Write something about yourself"/>
+                    <EditText
+                        android:id="@+id/editSocialMedia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="12dp"
+                        android:inputType="text"
+                        android:hint="Enter social media handle"/>
 
-                <!-- Website Field -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/website"
-                    android:textColor="@color/textPrimary"
-                    android:layout_marginBottom="4dp"/>
-
-                <EditText
-                    android:id="@+id/editWebsite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp"
-                    android:inputType="textUri"
-                    android:hint="Enter website"/>
-
-                <!-- Social Media Field -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/social_media"
-                    android:textColor="@color/textPrimary"
-                    android:layout_marginBottom="4dp"/>
-
-                <EditText
-                    android:id="@+id/editSocialMedia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:inputType="text"
-                    android:hint="Enter social media handle"/>
-
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
     </ScrollView>
 </LinearLayout>
