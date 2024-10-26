@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,7 +37,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity implements CommentAdapter.OnCommentAvatarClickListener {
     private ImageView backButton, likeButton;
     private TextView recipeName, chefName, likesCount, commentsCount;
     private TextView ingredientsText, instructionsText;
@@ -127,7 +125,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 // Chỉ thêm comment nếu nó không phải từ người dùng hiện tại
                 if (!userId.equals(this.userId)) {
-                    Comment newComment = new Comment(userName, content);
+                    Comment newComment = new Comment(userId, userName, content);
                     commentAdapter.addComment(newComment);
                     commentsRecyclerView.scrollToPosition(commentAdapter.getItemCount() - 1);
                 }
@@ -147,7 +145,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void setupComments() {
-        commentAdapter = new CommentAdapter(new ArrayList<>());
+        commentAdapter = new CommentAdapter(new ArrayList<>(), this);
         commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentsRecyclerView.setAdapter(commentAdapter);
     }
@@ -168,7 +166,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         commentInput.setText("");
                         // Thêm comment vào adapter ngay lập tức cho người gửi
                         CommentDto commentDto = response.body();
-                        Comment newComment = new Comment(commentDto.getUserName(), commentDto.getContent());
+                        Comment newComment = new Comment(userId, commentDto.getUserName(), commentDto.getContent());
                         runOnUiThread(() -> {
                             commentAdapter.addComment(newComment);
                             commentsRecyclerView.scrollToPosition(commentAdapter.getItemCount() - 1);
@@ -232,7 +230,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         // Cập nhật danh sách bình luận
         List<Comment> comments = new ArrayList<>();
         for (CommentDto commentDto : recipe.getComments()) {
-            comments.add(new Comment(commentDto.getUserName(), commentDto.getContent()));
+            comments.add(
+                    new Comment(commentDto.getUserId().toString(), commentDto.getUserName(), commentDto.getContent()));
         }
         commentAdapter.setComments(comments);
     }
@@ -250,5 +249,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(context, RecipeDetailActivity.class);
         intent.putExtra("RECIPE_ID", recipeId);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onAvatarClick(String userId) {
+        // Chuyển đến ProfileActivity với userId
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("USER_ID", userId);
+        startActivity(intent);
     }
 }

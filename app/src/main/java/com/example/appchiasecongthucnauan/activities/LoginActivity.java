@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.LoginDto;
-import com.example.appchiasecongthucnauan.models.UserDto;
+import com.example.appchiasecongthucnauan.models.user.UserDto;
 
 import retrofit2.Call;
 import retrofit2.Callback;

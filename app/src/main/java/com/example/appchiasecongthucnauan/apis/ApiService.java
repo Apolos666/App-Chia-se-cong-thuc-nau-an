@@ -1,10 +1,10 @@
 package com.example.appchiasecongthucnauan.apis;
 
 import com.example.appchiasecongthucnauan.models.LoginDto;
+import com.example.appchiasecongthucnauan.models.RecipeDto;
 import com.example.appchiasecongthucnauan.models.RegisterDto;
 import com.example.appchiasecongthucnauan.models.RecipeCategoryDto;
-import com.example.appchiasecongthucnauan.models.RecipeDto;
-import com.example.appchiasecongthucnauan.models.UserDto;
+import com.example.appchiasecongthucnauan.models.user.UserDto;
 import com.example.appchiasecongthucnauan.models.CommentDto;
 import com.example.appchiasecongthucnauan.models.CreateCommentRequest;
 
@@ -51,4 +51,7 @@ public interface ApiService {
 
     @POST("api/comments")
     Call<CommentDto> createComment(@Header("Authorization") String token, @Body CreateCommentRequest request);
+
+    @GET("api/users/{id}")
+    Call<UserDto> getUserById(@Path("id") String userId, @Header("Authorization") String token);
 }

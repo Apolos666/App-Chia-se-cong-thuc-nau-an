@@ -16,9 +16,15 @@ import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
     private List<Comment> comments;
+    private OnCommentAvatarClickListener avatarClickListener;
 
-    public CommentAdapter(List<Comment> comments) {
+    public interface OnCommentAvatarClickListener {
+        void onAvatarClick(String userId);
+    }
+
+    public CommentAdapter(List<Comment> comments, OnCommentAvatarClickListener listener) {
         this.comments = comments;
+        this.avatarClickListener = listener;
     }
 
     @NonNull
@@ -31,7 +37,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
-        holder.bind(comment);
+        holder.bind(comment, avatarClickListener);
     }
 
     @Override
@@ -61,9 +67,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             contentText = itemView.findViewById(R.id.commentContent);
         }
 
-        void bind(Comment comment) {
+        void bind(Comment comment, OnCommentAvatarClickListener listener) {
             userNameText.setText(comment.getUserName());
             contentText.setText(comment.getContent());
+
+            userAvatar.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onAvatarClick(comment.getUserId());
+                }
+            });
         }
     }
 }

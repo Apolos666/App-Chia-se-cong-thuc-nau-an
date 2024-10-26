@@ -1,5 +1,6 @@
-package com.example.appchiasecongthucnauan.models;
+package com.example.appchiasecongthucnauan.models.user;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserDto {
@@ -8,6 +9,9 @@ public class UserDto {
     private String name;
     private String bio;
     private String socialMedia;
+    private List<RecipeDto> recipes;
+    private List<UserFollowDto> following;
+    private List<UserFollowDto> followers;
 
     // Getters and setters
     public UUID getId() {
@@ -49,4 +53,29 @@ public class UserDto {
     public void setSocialMedia(String socialMedia) {
         this.socialMedia = socialMedia;
     }
+
+    public List<RecipeDto> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<RecipeDto> recipes) {
+        this.recipes = recipes;
+    }
+
+    public List<UserFollowDto> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<UserFollowDto> following) {
+        this.following = following;
+    }
+
+    public List<UserFollowDto> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<UserFollowDto> followers) {
+        this.followers = followers;
+    }
 }
+

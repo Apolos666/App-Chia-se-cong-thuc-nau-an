@@ -38,7 +38,7 @@ public class SignalRManager {
             throw new IllegalStateException("Base URL must be set before initializing connections");
         }
         String hubUrl = baseUrl + "/" + hubName;
-        Log.e("SignalR", hubUrl );
+        Log.e("SignalR", hubUrl);
         HubConnection hubConnection = HubConnectionBuilder.create(hubUrl)
                 .withAccessTokenProvider(Single.just(token))
                 .build();

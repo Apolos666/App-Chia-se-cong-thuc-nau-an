@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.appchiasecongthucnauan.R;
 
 import java.util.List;
@@ -18,12 +19,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     public static final int VIEW_TYPE_LIST = 1;
 
     private Context context;
-    private List<String> gridItems;
+    private List<String> mediaUrls;
     private int viewType = VIEW_TYPE_GRID;
 
-    public PhotoAdapter(Context context, List<String> gridItems) {
+    public PhotoAdapter(Context context, List<String> mediaUrls) {
         this.context = context;
-        this.gridItems = gridItems;
+        this.mediaUrls = mediaUrls;
     }
 
     public void setViewType(int viewType) {
@@ -45,17 +46,17 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
-        String gridItem = gridItems.get(position);
-        // Tải ảnh vào ImageView, ví dụ sử dụng Glide:
-        // Glide.with(context).load(gridItem).into(holder.imageView);
-
-        // Tạm thời, sử dụng placeholder
-        holder.imageView.setImageResource(R.drawable.ic_placeholder);
+        String mediaUrl = mediaUrls.get(position);
+        Glide.with(context)
+                .load(mediaUrl)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
+                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return gridItems.size();
+        return mediaUrls.size();
     }
 
     static class PhotoViewHolder extends RecyclerView.ViewHolder {
