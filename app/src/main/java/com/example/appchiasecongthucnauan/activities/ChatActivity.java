@@ -19,6 +19,7 @@ import com.example.appchiasecongthucnauan.models.ChatMessage;
 import com.example.appchiasecongthucnauan.models.SendMessageRequest;
 import com.example.appchiasecongthucnauan.models.MessageDto;
 import com.example.appchiasecongthucnauan.models.ConversationDto;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 import com.example.appchiasecongthucnauan.utils.SignalRManager;
 
 import java.util.ArrayList;
@@ -88,24 +89,11 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void setupRetrofit() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5076/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
+        apiService = RetrofitClient.getInstance().getApiService();
     }
 
     private void setupSignalR() {
         signalRManager = SignalRManager.getInstance();
-        signalRManager.setBaseUrl("http://10.0.2.2:5076");
         String token = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("token", "");
         signalRManager.initializeConnection("hub/chat", token);
         signalRManager.startConnection("hub/chat");

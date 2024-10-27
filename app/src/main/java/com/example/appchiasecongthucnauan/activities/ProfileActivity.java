@@ -21,6 +21,7 @@ import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.user.UserDto;
 import com.example.appchiasecongthucnauan.models.user.RecipeDto;
 import com.example.appchiasecongthucnauan.models.userfollow.FollowStatusResponse;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5076/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
+        apiService = RetrofitClient.getInstance().getApiService();
     }
 
     private void setupViews(boolean isOwnProfile) {

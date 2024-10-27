@@ -26,6 +26,7 @@ import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.UpdateUserDto;
 import com.example.appchiasecongthucnauan.models.UserProfile;
 import com.example.appchiasecongthucnauan.models.user.UserDto;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 
 import java.io.IOException;
 import okhttp3.OkHttpClient;
@@ -69,19 +70,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setupRetrofit() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5076/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
+        apiService = RetrofitClient.getInstance().getApiService();
     }
 
     private void initViews() {

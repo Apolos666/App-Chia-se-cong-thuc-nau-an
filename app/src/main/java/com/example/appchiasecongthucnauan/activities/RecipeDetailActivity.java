@@ -31,6 +31,7 @@ import com.example.appchiasecongthucnauan.models.CommentDto;
 import com.example.appchiasecongthucnauan.models.CreateCommentRequest;
 import com.example.appchiasecongthucnauan.models.RecipeDto;
 import com.example.appchiasecongthucnauan.utils.SignalRManager;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,19 +91,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
     }
 
     private void setupRetrofit() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5076/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
+        apiService = RetrofitClient.getInstance().getApiService();
     }
 
     private void setupSignalR() {
@@ -112,25 +101,24 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
         userId = sharedPreferences.getString("userId", "");
 
         signalRManager = SignalRManager.getInstance();
-        signalRManager.setBaseUrl("http://10.0.2.2:5076");
         try {
             signalRManager.initializeConnection("hub/comment", token);
             signalRManager.startConnection("hub/comment");
+
+            signalRManager.on("hub/comment", "ReceiveComment", (userId, userName, content) -> {
+                runOnUiThread(() -> {
+                    // Chỉ thêm comment nếu nó không phải từ người dùng hiện tại
+                    if (!userId.equals(this.userId)) {
+                        Comment newComment = new Comment(userId, userName, content);
+                        commentAdapter.addComment(newComment);
+                        commentsRecyclerView.scrollToPosition(commentAdapter.getItemCount() - 1);
+                    }
+                });
+            });
         } catch (Exception e) {
             Log.e("RecipeDetailActivity", "Lỗi khi kết nối SignalR: " + e.getMessage());
             Toast.makeText(this, "Không thể kết nối đến máy chủ bình luận", Toast.LENGTH_SHORT).show();
         }
-
-        signalRManager.on("hub/comment", "ReceiveComment", (userId, userName, content) -> {
-            runOnUiThread(() -> {
-                // Chỉ thêm comment nếu nó không phải từ người dùng hiện tại
-                if (!userId.equals(this.userId)) {
-                    Comment newComment = new Comment(userId, userName, content);
-                    commentAdapter.addComment(newComment);
-                    commentsRecyclerView.scrollToPosition(commentAdapter.getItemCount() - 1);
-                }
-            });
-        });
     }
 
     private void setupRecipe() {

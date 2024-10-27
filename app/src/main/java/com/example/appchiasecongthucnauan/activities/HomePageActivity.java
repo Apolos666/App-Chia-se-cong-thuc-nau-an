@@ -19,6 +19,7 @@ import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.custom.CustomBottomNavigationView;
 import com.example.appchiasecongthucnauan.models.Post;
 import com.example.appchiasecongthucnauan.models.RecipeDto;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -70,12 +71,7 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
         });
 
         // Khởi tạo Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5076/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
+        apiService = RetrofitClient.getInstance().getApiService();
 
         // Gọi API để lấy danh sách công thức
         fetchRecipes();

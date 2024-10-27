@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.RecipeCategoryDto;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,21 +90,7 @@ public class CreateRecipeActivity extends AppCompatActivity {
         categorySpinner = findViewById(R.id.categorySpinner);
         instructionsLayout = findViewById(R.id.instructionsLayout);
 
-        // Khởi tạo Retrofit
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5076/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
-
+        setupRetrofit();
         fetchRecipeCategories();
 
         // Set up click listeners
@@ -386,5 +373,9 @@ public class CreateRecipeActivity extends AppCompatActivity {
     private String getToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         return sharedPreferences.getString("token", "");
+    }
+
+    private void setupRetrofit() {
+        apiService = RetrofitClient.getInstance().getApiService();
     }
 }

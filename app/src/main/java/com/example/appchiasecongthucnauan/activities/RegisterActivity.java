@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.RegisterDto;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,12 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvLogin = findViewById(R.id.tv2);
         progressBar = findViewById(R.id.progressBar);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5076/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
+        apiService = RetrofitClient.getInstance().getApiService();
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

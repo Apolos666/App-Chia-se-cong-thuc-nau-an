@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.core.Single;
 public class SignalRManager {
     private static SignalRManager instance;
     private Map<String, HubConnection> hubConnections;
-    private String baseUrl;
+    private static final String BASE_URL = "https://satyr-grown-dassie.ngrok-free.app";
 
     private SignalRManager() {
         hubConnections = new HashMap<>();
@@ -30,15 +30,12 @@ public class SignalRManager {
         return instance;
     }
 
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
+    public String getBaseUrl() {
+        return BASE_URL;
     }
 
     public void initializeConnection(String hubName, String token) {
-        if (baseUrl == null) {
-            throw new IllegalStateException("Base URL must be set before initializing connections");
-        }
-        String hubUrl = baseUrl + "/" + hubName;
+        String hubUrl = BASE_URL + "/" + hubName;
         Log.e("SignalR", hubUrl);
         HubConnection hubConnection = HubConnectionBuilder.create(hubUrl)
                 .withAccessTokenProvider(Single.just(token))
