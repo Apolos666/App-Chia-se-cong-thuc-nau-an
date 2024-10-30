@@ -9,48 +9,51 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.adapters.RecipesAdapter;
 import com.example.appchiasecongthucnauan.models.Recipe_1;
-import com.example.appchiasecongthucnauan.models.User;
+import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
+import com.example.appchiasecongthucnauan.models.search.RecipeSearchResultDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipesFragment extends Fragment {
+public class RecipesFragment extends Fragment implements SearchableFragment {
     private RecyclerView recyclerView;
     private RecipesAdapter adapter;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipes, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RecipesAdapter();
-        recyclerView.setAdapter(adapter);
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_recipes, container, false);
+            recyclerView = rootView.findViewById(R.id.recyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            adapter = new RecipesAdapter();
+            recyclerView.setAdapter(adapter);
 
-        List<Recipe_1> sampleData = new ArrayList<>();
-        sampleData.add(new Recipe_1("Bánh mì", "Đầu bếp D", "url_hinh_anh"));
-        sampleData.add(new Recipe_1("Phở bò", "Đầu bếp B", "url_hinh_anh"));
-        sampleData.add(new Recipe_1("Phở bò", "Đầu bếp B", "url_hinh_anh"));
-        sampleData.add(new Recipe_1("Phở bò", "Đầu bếp B", "url_hinh_anh"));
-
-
-        // Cập nhật adapter với dữ liệu mẫu
-        adapter.setRecipes(sampleData);
-
-        Button sortButton = view.findViewById(R.id.sortButton);
-        sortButton.setOnClickListener(v -> {
-            adapter.toggleSortOrder();
-            adapter.notifyDataSetChanged();
-        });
-
-        return view;
+            Button sortButton = rootView.findViewById(R.id.sortButton);
+            sortButton.setOnClickListener(v -> {
+                adapter.toggleSortOrder();
+                adapter.notifyDataSetChanged();
+            });
+        }
+        return rootView;
     }
 
-    public void updateSearchResults(String query) {
-        // Implement search logic here
-        // Update adapter with new search results
-        // adapter.setItems(newSearchResults);
+    @Override
+    public void onSearchResultsUpdated(SearchResultDto results) {
+        if (getActivity() == null) return;
+
+        getActivity().runOnUiThread(() -> {
+            if (adapter != null && results.getRecipes() != null) {
+                List<Recipe_1> recipes = new ArrayList<>();
+                for (RecipeSearchResultDto recipeDto : results.getRecipes()) {
+                    recipes.add(new Recipe_1(recipeDto.getTitle(), recipeDto.getChefName(), recipeDto.getThumbnailUrl()));
+                }
+                adapter.setRecipes(recipes);
+            }
+        });
     }
 }
