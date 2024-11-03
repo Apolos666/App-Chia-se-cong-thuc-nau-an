@@ -6,40 +6,43 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.appchiasecongthucnauan.fragments.AllFragment;
+import com.example.appchiasecongthucnauan.fragments.SearchableFragment;
 import com.example.appchiasecongthucnauan.fragments.UsersFragment;
 import com.example.appchiasecongthucnauan.fragments.RecipesFragment;
+import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchViewPagerAdapter extends FragmentStateAdapter {
-    private String currentQuery = "";
+    private SearchResultDto searchResults;
+    private List<Fragment> fragments;
 
     public SearchViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
+        fragments = new ArrayList<>();
+        fragments.add(new AllFragment());
+        fragments.add(new UsersFragment());
+        fragments.add(new RecipesFragment());
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return new AllFragment();
-            case 1:
-                return new UsersFragment();
-            case 2:
-                return new RecipesFragment();
-            default:
-                return new AllFragment();
+        return fragments.get(position);
+    }
+
+    public void updateSearchResults(SearchResultDto results) {
+        this.searchResults = results;
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof SearchableFragment) {
+                ((SearchableFragment) fragment).onSearchResultsUpdated(results);
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
-    }
-
-    public void updateSearchResults(String query) {
-        this.currentQuery = query;
-        // Notify fragments to update their content
-        // You need to implement a method to notify the fragments
-        // This could be done through a shared ViewModel or by calling a method on each fragment
+        return fragments.size();
     }
 }

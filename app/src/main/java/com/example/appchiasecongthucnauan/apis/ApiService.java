@@ -12,6 +12,7 @@ import com.example.appchiasecongthucnauan.models.SendMessageRequest;
 import com.example.appchiasecongthucnauan.models.ConversationDto;
 import com.example.appchiasecongthucnauan.models.MessageDto;
 import com.example.appchiasecongthucnauan.models.userfollow.FollowStatusResponse;
+import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -88,4 +89,7 @@ public interface ApiService {
 
         @GET("api/users-follow/{id}/follow-status")
         Call<FollowStatusResponse> getFollowStatus(@Path("id") String userId, @Header("Authorization") String token);
+
+        @GET("api/search")
+        Call<SearchResultDto> search(@Header("Authorization") String token, @Query("q") String searchTerm);
 }

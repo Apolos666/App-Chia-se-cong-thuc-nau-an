@@ -1,10 +1,12 @@
 package com.example.appchiasecongthucnauan.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,15 +14,26 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.adapters.SearchViewPagerAdapter;
+import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.custom.CustomBottomNavigationView;
+import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
+import com.example.appchiasecongthucnauan.utils.SearchState;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
+    private ApiService apiService;
+    private String token;
+    private SearchResultDto lastSearchResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +42,15 @@ public class SearchActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabLayout_1);
         viewPager = findViewById(R.id.viewPager_1);
-
+        SearchState.getInstance().clear();
         setupViewPager();
         setupTabLayout();
         initializeNavigation();
         setupSearchFunctionality();
+
+        apiService = RetrofitClient.getInstance().getApiService();
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
     }
 
     private void setupViewPager() {
@@ -89,9 +106,34 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void performSearch(String query) {
-        SearchViewPagerAdapter adapter = (SearchViewPagerAdapter) viewPager.getAdapter();
-        if (adapter != null) {
-            adapter.updateSearchResults(query);
+        if (query.trim().isEmpty()) {
+            Toast.makeText(SearchActivity.this, "Vui lòng nhập từ khóa tìm kiếm", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        Call<SearchResultDto> call = apiService.search("Bearer " + token, query);
+
+        call.enqueue(new Callback<SearchResultDto>() {
+            @Override
+            public void onResponse(Call<SearchResultDto> call, Response<SearchResultDto> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    SearchState.getInstance().setSearchResults(response.body());
+                    SearchViewPagerAdapter adapter = (SearchViewPagerAdapter) viewPager.getAdapter();
+                    if (adapter != null) {
+                        adapter.updateSearchResults(SearchState.getInstance().getLastSearchResults());
+                    }
+                } else {
+
+                    Toast.makeText(SearchActivity.this, "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResultDto> call, Throwable t) {
+                Toast.makeText(SearchActivity.this, "Lỗi khi tìm kiếm: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 }
