@@ -15,6 +15,7 @@ import com.example.appchiasecongthucnauan.adapters.RecipesAdapter;
 import com.example.appchiasecongthucnauan.models.Recipe_1;
 import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
 import com.example.appchiasecongthucnauan.models.search.RecipeSearchResultDto;
+import com.example.appchiasecongthucnauan.utils.SearchState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public class RecipesFragment extends Fragment implements SearchableFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             adapter = new RecipesAdapter();
             recyclerView.setAdapter(adapter);
+
+            SearchResultDto savedResults = SearchState.getInstance().getLastSearchResults();
+            if (savedResults != null) {
+                onSearchResultsUpdated(savedResults);
+            }
 
             Button sortButton = rootView.findViewById(R.id.sortButton);
             sortButton.setOnClickListener(v -> {

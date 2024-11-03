@@ -32,7 +32,14 @@ public class AllFragment extends Fragment implements SearchableFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AllAdapter();
         recyclerView.setAdapter(adapter);
-        
+
+        // fix sort cho tab all
+        Button sortButton = view.findViewById(R.id.sortButton);
+        sortButton.setOnClickListener(v -> {
+            adapter.toggleSortOrder();
+            adapter.notifyDataSetChanged();
+        });
+
         return view;
     }
 

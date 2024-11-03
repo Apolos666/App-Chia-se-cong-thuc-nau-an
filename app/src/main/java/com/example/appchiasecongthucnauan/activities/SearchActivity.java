@@ -18,6 +18,7 @@ import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.custom.CustomBottomNavigationView;
 import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
 import com.example.appchiasecongthucnauan.utils.RetrofitClient;
+import com.example.appchiasecongthucnauan.utils.SearchState;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -32,6 +33,7 @@ public class SearchActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private ApiService apiService;
     private String token;
+    private SearchResultDto lastSearchResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class SearchActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabLayout_1);
         viewPager = findViewById(R.id.viewPager_1);
-
+        SearchState.getInstance().clear();
         setupViewPager();
         setupTabLayout();
         initializeNavigation();
@@ -116,9 +118,10 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(Call<SearchResultDto> call, Response<SearchResultDto> response) {
 
                 if (response.isSuccessful() && response.body() != null) {
+                    SearchState.getInstance().setSearchResults(response.body());
                     SearchViewPagerAdapter adapter = (SearchViewPagerAdapter) viewPager.getAdapter();
                     if (adapter != null) {
-                        adapter.updateSearchResults(response.body());
+                        adapter.updateSearchResults(SearchState.getInstance().getLastSearchResults());
                     }
                 } else {
 
