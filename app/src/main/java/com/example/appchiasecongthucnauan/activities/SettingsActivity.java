@@ -31,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         Button btnSignOut = findViewById(R.id.btnSignOut);
         TextView tvMyProfile = findViewById(R.id.tvMyProfile);
         TextView tvMyBookmark = findViewById(R.id.tvMyBookmark);
+        TextView tvMessages = findViewById(R.id.tvMessages);
         TextView tvPrivacy = findViewById(R.id.tvPrivacy);
         TextView tvHelpSupport = findViewById(R.id.tvHelpSupport);
 
@@ -57,6 +58,13 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingsActivity.this, BookmarksActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvMessages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, ConversationListActivity.class);
                 startActivity(intent);
             }
         });
