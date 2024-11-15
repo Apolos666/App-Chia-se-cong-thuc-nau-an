@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.core.Single;
 public class SignalRManager {
     private static SignalRManager instance;
     private Map<String, HubConnection> hubConnections;
-    private static final String BASE_URL = "https://satyr-grown-dassie.ngrok-free.app";
+    private static final String BASE_URL = "http://10.0.2.2:5076";
 
     private SignalRManager() {
         hubConnections = new HashMap<>();
