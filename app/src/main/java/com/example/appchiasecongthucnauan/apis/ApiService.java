@@ -13,6 +13,7 @@ import com.example.appchiasecongthucnauan.models.ConversationDto;
 import com.example.appchiasecongthucnauan.models.MessageDto;
 import com.example.appchiasecongthucnauan.models.userfollow.FollowStatusResponse;
 import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
+import com.example.appchiasecongthucnauan.models.BookmarkResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -28,6 +29,8 @@ import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import java.util.UUID;
+import android.util.Log;
 
 public interface ApiService {
         @POST("api/auth/register")
@@ -92,4 +95,13 @@ public interface ApiService {
 
         @GET("api/search")
         Call<SearchResultDto> search(@Header("Authorization") String token, @Query("q") String searchTerm);
+
+        @GET("api/bookmarks/{recipeId}")
+        Call<BookmarkResponse> getBookmarkStatus(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+
+        @POST("api/bookmarks/{recipeId}")
+        Call<BookmarkResponse> addBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+
+        @DELETE("api/bookmarks/{recipeId}")
+        Call<BookmarkResponse> removeBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
 }

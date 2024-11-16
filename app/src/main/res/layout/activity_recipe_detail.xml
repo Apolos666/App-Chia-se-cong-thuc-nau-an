@@ -26,7 +26,7 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:id="@+id/likeButton"
+            android:id="@+id/BookMarkButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_bookmark_border_24"/>
@@ -88,42 +88,32 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="8dp">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/ic_heart"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_heart_1"
+                    android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/likesCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:layout_marginEnd="16dp"/>
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_heart_1"
-                        android:layout_marginEnd="8dp" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_comment_1"
+                    android:layout_marginEnd="8dp"/>
 
-                    <TextView
-                        android:id="@+id/likesCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/commentsCount"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="16dp">
+                    android:layout_height="wrap_content"/>
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_comment_1"
-                        android:layout_marginEnd="8dp" />
-
-                    <TextView
-                        android:id="@+id/commentsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
             </LinearLayout>
 
             <TextView

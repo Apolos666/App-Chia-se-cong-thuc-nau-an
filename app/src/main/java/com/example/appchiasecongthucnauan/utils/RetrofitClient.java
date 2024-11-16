@@ -3,28 +3,45 @@ package com.example.appchiasecongthucnauan.utils;
 import com.example.appchiasecongthucnauan.apis.ApiService;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
+import android.util.Log;
+import okhttp3.Request;
 
 public class RetrofitClient {
     private static final String BASE_URL = "http://10.0.2.2:5076/";
     private static RetrofitClient instance;
     private Retrofit retrofit;
+    private ApiService apiService;
 
     private RetrofitClient() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(message -> {
+            Log.d("RetrofitClient", "API Call: " + message);
+        });
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(logging)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(chain -> {
+                    Request request = chain.request();
+                    Log.d("RetrofitClient", "URL: " + request.url());
+                    return chain.proceed(request);
+                })
                 .build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        apiService = retrofit.create(ApiService.class);
     }
 
     public static synchronized RetrofitClient getInstance() {
@@ -35,6 +52,6 @@ public class RetrofitClient {
     }
 
     public ApiService getApiService() {
-        return retrofit.create(ApiService.class);
+        return apiService;
     }
 }
