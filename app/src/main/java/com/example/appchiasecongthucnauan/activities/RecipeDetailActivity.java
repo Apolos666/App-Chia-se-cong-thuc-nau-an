@@ -39,7 +39,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class RecipeDetailActivity extends AppCompatActivity implements CommentAdapter.OnCommentAvatarClickListener {
-    private ImageView backButton, likeButton;
+    private ImageView backButton;
     private TextView recipeName, chefName, likesCount, commentsCount;
     private TextView ingredientsText, instructionsText;
     private RecyclerView commentsRecyclerView;
@@ -54,6 +54,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
     private String userName;
     private String userId;
     private ApiService apiService;
+    private ImageView likeIconView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +70,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
 
     private void initViews() {
         backButton = findViewById(R.id.backButton);
-        likeButton = findViewById(R.id.likeButton);
         recipeName = findViewById(R.id.recipeName);
         chefName = findViewById(R.id.chefName);
         likesCount = findViewById(R.id.likesCount);
@@ -86,8 +86,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
         snapHelper.attachToRecyclerView(mediaRecyclerView);
 
         backButton.setOnClickListener(v -> finish());
-        likeButton.setOnClickListener(v -> toggleLike());
         sendCommentButton.setOnClickListener(v -> sendComment());
+
+        likeIconView = findViewById(R.id.likeIconView);
+        likeIconView.setOnClickListener(v -> toggleLike());
     }
 
     private void setupRetrofit() {
@@ -139,7 +141,41 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
     }
 
     private void toggleLike() {
-        // Implement like functionality
+        if (recipeId == null)
+            return;
+
+        Call<Void> call;
+        if (likeIconView.isSelected()) {
+            call = apiService.unlikeRecipe(recipeId, "Bearer " + token);
+        } else {
+            call = apiService.likeRecipe(recipeId, "Bearer " + token);
+        }
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    boolean newLikeState = !likeIconView.isSelected();
+                    updateLikeButton(newLikeState);
+                    int currentLikes = Integer.parseInt(likesCount.getText().toString());
+                    likesCount.setText(String.valueOf(newLikeState ? currentLikes + 1 : currentLikes - 1));
+                } else {
+                    Toast.makeText(RecipeDetailActivity.this, "Không thể cập nhật trạng thái yêu thích",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(RecipeDetailActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateLikeButton(boolean isLiked) {
+        likeIconView.setSelected(isLiked);
+        int heartIcon = isLiked ? R.drawable.ic_heart_1 : R.drawable.icon_heart_1;
+        likeIconView.setImageResource(heartIcon);
     }
 
     private void sendComment() {
@@ -179,13 +215,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        Call<RecipeDto> call = apiService.getRecipe(recipeId);
+        Call<RecipeDto> call = apiService.getRecipe(recipeId, "Bearer " + token);
         call.enqueue(new Callback<RecipeDto>() {
             @Override
             public void onResponse(Call<RecipeDto> call, Response<RecipeDto> response) {
                 progressDialog.dismiss();
                 if (response.isSuccessful() && response.body() != null) {
-                    updateUI(response.body());
+                    RecipeDto recipe = response.body();
+                    updateUI(recipe);
+                    updateLikeButton(recipe.isLiked());
+                    Log.e("RecipeDetail", recipe.isLiked() + "");
                 } else {
                     Log.e("RecipeDetailActivity", "Lỗi khi tải công thức. Mã lỗi: " + response.code());
                     Toast.makeText(RecipeDetailActivity.this, "Không thể tải công thức", Toast.LENGTH_SHORT).show();

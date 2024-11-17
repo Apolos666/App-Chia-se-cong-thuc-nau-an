@@ -56,7 +56,7 @@ public interface ApiService {
         Call<List<RecipeDto>> getRecipes();
 
         @GET("api/recipes/{id}")
-        Call<RecipeDto> getRecipe(@Path("id") String recipeId);
+        Call<RecipeDto> getRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
 
         @POST("api/comments")
         Call<CommentDto> createComment(@Header("Authorization") String token, @Body CreateCommentRequest request);
@@ -92,4 +92,10 @@ public interface ApiService {
 
         @GET("api/search")
         Call<SearchResultDto> search(@Header("Authorization") String token, @Query("q") String searchTerm);
+
+        @POST("api/recipes/{id}/like")
+        Call<Void> likeRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
+
+        @DELETE("api/recipes/{id}/unlike")
+        Call<Void> unlikeRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
 }
