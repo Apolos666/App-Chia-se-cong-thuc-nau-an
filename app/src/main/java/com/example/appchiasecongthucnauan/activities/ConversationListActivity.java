@@ -3,6 +3,8 @@ package com.example.appchiasecongthucnauan.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -44,7 +46,18 @@ public class ConversationListActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish());
 
         EditText searchEditText = findViewById(R.id.searchConversations);
-        // Implement search functionality if needed
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
