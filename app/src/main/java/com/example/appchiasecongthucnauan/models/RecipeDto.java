@@ -16,6 +16,7 @@ public class RecipeDto {
     private List<String> mediaUrls;
     private int likesCount;
     private List<CommentDto> comments;
+    private boolean isLiked;
 
     public UUID getId() {
         return id;
@@ -103,5 +104,13 @@ public class RecipeDto {
 
     public void setComments(List<CommentDto> comments) {
         this.comments = comments;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 }
