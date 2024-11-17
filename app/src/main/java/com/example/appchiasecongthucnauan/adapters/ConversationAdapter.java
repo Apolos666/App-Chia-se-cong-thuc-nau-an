@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.models.ConversationDto;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ViewHolder> {
-    private List<ConversationDto> conversations;
+    private List<ConversationDto> conversations; // Lưu danh sách gốc không thay đổi
+    private List<ConversationDto> conversationsFiltered; // Lưu danh sách đã được lọc, dùng để hiển thị
     private OnConversationClickListener listener;
 
     @FunctionalInterface
@@ -23,6 +25,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     public ConversationAdapter(List<ConversationDto> conversations, OnConversationClickListener listener) {
         this.conversations = conversations;
+        this.conversationsFiltered = new ArrayList<>(conversations);
         this.listener = listener;
     }
 
@@ -36,7 +39,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ConversationDto conversation = conversations.get(position);
+        ConversationDto conversation = conversationsFiltered.get(position);
         holder.userName.setText(conversation.getOtherUserName());
         if (conversation.getLastMessage() != null) {
             holder.lastMessage.setText(conversation.getLastMessage().getContent());
@@ -48,12 +51,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     @Override
     public int getItemCount() {
-        return conversations.size();
+        return conversationsFiltered.size();
     }
 
     public void setConversations(List<ConversationDto> conversations) {
         this.conversations = conversations;
+        this.conversationsFiltered = new ArrayList<>(conversations);
         notifyDataSetChanged();
+    }
+
+    public void filter(String query) {
+        conversationsFiltered.clear();
+        if (query.isEmpty()) {
+            conversationsFiltered.addAll(conversations);
+        } else {
+            String lowerCaseQuery = query.toLowerCase().trim();
+            for (ConversationDto conversation : conversations) {
+                if (conversation.getOtherUserName().toLowerCase().contains(lowerCaseQuery)) {
+                    conversationsFiltered.add(conversation);
+                }
+            }
+        }
+        notifyDataSetChanged(); // Cập nhật RecyclerView
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
