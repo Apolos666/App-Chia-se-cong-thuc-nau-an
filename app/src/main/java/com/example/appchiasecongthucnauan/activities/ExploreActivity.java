@@ -77,9 +77,6 @@ public class ExploreActivity extends AppCompatActivity {
                 case 1:
                     tab.setText("Gần đây");
                     break;
-                case 2:
-                    tab.setText("Thể loại");
-                    break;
             }
         }).attach();
     }
