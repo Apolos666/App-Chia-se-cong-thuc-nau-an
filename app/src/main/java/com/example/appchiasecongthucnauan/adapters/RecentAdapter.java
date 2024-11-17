@@ -5,17 +5,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.appchiasecongthucnauan.R;
-import com.example.appchiasecongthucnauan.models.RecentItem;
+import com.example.appchiasecongthucnauan.models.explore.RecentRecipeDto;
+import com.example.appchiasecongthucnauan.utils.TimeUtils;
 
 import java.util.List;
-public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder> {
-    private List<RecentItem> items;
 
-    public RecentAdapter(List<RecentItem> items) {
-        this.items = items;
+public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder> {
+    private List<RecentRecipeDto> recipes;
+
+    public RecentAdapter(List<RecentRecipeDto> recipes) {
+        this.recipes = recipes;
     }
 
     @NonNull
@@ -27,17 +33,23 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RecentItem item = items.get(position);
-        holder.titleTextView.setText(item.getTitle());
-        holder.authorTextView.setText(item.getAuthor());
-        holder.timeTextView.setText(item.getTimeAgo());
-        // Load image using Glide or Picasso
-        // Glide.with(holder.imageView.getContext()).load(item.getImageUrl()).into(holder.imageView);
+        RecentRecipeDto recipe = recipes.get(position);
+        holder.titleTextView.setText(recipe.getTitle());
+        holder.authorTextView.setText("Bởi:" + recipe.getChefName());
+        holder.timeTextView.setText(TimeUtils.getTimeAgo(recipe.getCreatedAt()));
+
+        if (recipe.getImageUrl() != null) {
+            Glide.with(holder.imageView.getContext())
+                    .load(recipe.getImageUrl())
+                    .transform(new RoundedCorners(20))
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(holder.imageView);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return recipes.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

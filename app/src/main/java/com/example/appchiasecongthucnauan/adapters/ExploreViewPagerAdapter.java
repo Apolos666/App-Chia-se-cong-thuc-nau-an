@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.appchiasecongthucnauan.fragments.RecentFragment;
-import com.example.appchiasecongthucnauan.fragments.CategoriesFragment;
 import com.example.appchiasecongthucnauan.fragments.TrendingFragment;
 
 public class ExploreViewPagerAdapter extends FragmentStateAdapter {
@@ -23,8 +22,6 @@ public class ExploreViewPagerAdapter extends FragmentStateAdapter {
                 return new TrendingFragment();
             case 1:
                 return new RecentFragment();
-            case 2:
-                return new CategoriesFragment();
             default:
                 return new TrendingFragment();
         }
@@ -32,6 +29,6 @@ public class ExploreViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3; // Tổng số tab
+        return 2;
     }
 }
