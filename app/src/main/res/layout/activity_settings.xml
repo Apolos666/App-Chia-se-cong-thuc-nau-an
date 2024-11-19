@@ -87,6 +87,13 @@
             android:text="Hỗ trợ"
             android:padding="16dp"
             android:drawableEnd="@drawable/ic_arrow_right"/>
+        <TextView
+            android:id="@+id/tvThanhVienNhom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thành viên nhóm"
+            android:padding="16dp"
+            android:drawableEnd="@drawable/ic_arrow_right"/>
     </LinearLayout>
 
     <View
