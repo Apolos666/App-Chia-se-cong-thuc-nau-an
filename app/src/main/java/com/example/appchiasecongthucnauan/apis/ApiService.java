@@ -14,6 +14,7 @@ import com.example.appchiasecongthucnauan.models.MessageDto;
 import com.example.appchiasecongthucnauan.models.userfollow.FollowStatusResponse;
 import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
 import com.example.appchiasecongthucnauan.models.BookmarkResponse;
+import com.example.appchiasecongthucnauan.models.BookmarkDto;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -104,4 +105,7 @@ public interface ApiService {
 
         @DELETE("api/bookmarks/{recipeId}")
         Call<BookmarkResponse> removeBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+
+        @GET("api/bookmarks")
+        Call<List<BookmarkDto>> getBookmarks(@Header("Authorization") String token);
 }

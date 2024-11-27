@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.activities.RecipeDetailActivity;
 import com.example.appchiasecongthucnauan.models.Bookmark;
 
 import java.util.List;
@@ -39,6 +41,23 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         Bookmark bookmark = bookmarks.get(position);
         holder.title.setText(bookmark.getTitle());
         holder.author.setText(bookmark.getAuthor());
+        
+        // Load image using Glide
+        if (bookmark.getMediaUrl() != null && !bookmark.getMediaUrl().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                .load(bookmark.getMediaUrl())
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
+                .into(holder.bookmarkImage);
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            // Navigate to recipe detail
+            RecipeDetailActivity.start(
+                holder.itemView.getContext(), 
+                bookmark.getRecipeId()
+            );
+        });
     }
 
     @Override
@@ -49,11 +68,13 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView author;
+        ImageView bookmarkImage;
 
         ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.bookmarkTitle);
             author = itemView.findViewById(R.id.bookmarkAuthor);
+            bookmarkImage = itemView.findViewById(R.id.bookmarkImage);
         }
     }
 }

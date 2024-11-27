@@ -34,10 +34,12 @@ import com.example.appchiasecongthucnauan.utils.SignalRManager;
 import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 import com.example.appchiasecongthucnauan.models.BookmarkResponse;
 
+import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
 public class RecipeDetailActivity extends AppCompatActivity implements CommentAdapter.OnCommentAvatarClickListener {
     private ImageView backButton, bookmarkButton;
@@ -285,19 +287,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
     private void toggleBookmark() {
         String token = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("token", "");
         
-        // Log chi tiết hơn
-        Log.d("RecipeDetailActivity", "Attempting to toggle bookmark");
-        Log.d("RecipeDetailActivity", "Current isBookmarked status: " + isBookmarked);
-        Log.d("RecipeDetailActivity", "Token: " + token);
-        Log.d("RecipeDetailActivity", "RecipeId: " + recipeId);
-        
         Call<BookmarkResponse> call;
         if (isBookmarked) {
-            Log.d("RecipeDetailActivity", "Attempting to remove bookmark");
+            // Xóa bookmark
             call = RetrofitClient.getInstance().getApiService()
                 .removeBookmark("Bearer " + token, recipeId);
         } else {
-            Log.d("RecipeDetailActivity", "Attempting to add bookmark");
+            // Thêm bookmark
             call = RetrofitClient.getInstance().getApiService()
                 .addBookmark("Bearer " + token, recipeId);
         }
@@ -305,41 +301,50 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
         call.enqueue(new Callback<BookmarkResponse>() {
             @Override
             public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
-                Log.d("RecipeDetailActivity", "Response received");
-                Log.d("RecipeDetailActivity", "Response code: " + response.code());
-                
                 if (!response.isSuccessful()) {
-                    try {
-                        String errorBody = response.errorBody().string();
-                        Log.e("RecipeDetailActivity", "Error body: " + errorBody);
-                        Toast.makeText(RecipeDetailActivity.this, 
-                            "Lỗi: " + errorBody, Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        Log.e("RecipeDetailActivity", "Error reading error body", e);
-                    }
+                    handleErrorResponse(response);
                     return;
                 }
                 
-                if (response.body() != null) {
-                    isBookmarked = response.body().isBookmarked();
-                    Log.d("RecipeDetailActivity", "New bookmark status: " + isBookmarked);
-                    updateBookmarkIcon();
-                    String message = isBookmarked ? "Đã lưu công thức" : "Đã bỏ lưu công thức";
-                    Toast.makeText(RecipeDetailActivity.this, message, Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.e("RecipeDetailActivity", "Response body is null");
+                if (response.body() == null) {
                     Toast.makeText(RecipeDetailActivity.this, 
                         "Lỗi: Không nhận được phản hồi từ server", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                isBookmarked = response.body().isBookmarked();
+                updateBookmarkIcon(); // Cập nhật icon bookmark
+                String message = isBookmarked ? "Đã lưu công thức" : "Đã bỏ lưu công thức";
+                Toast.makeText(RecipeDetailActivity.this, message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<BookmarkResponse> call, Throwable t) {
-                Log.e("RecipeDetailActivity", "Network error", t);
-                Toast.makeText(RecipeDetailActivity.this, 
-                    "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                if (t instanceof EOFException) {
+                    // Handle empty response specifically
+                    Toast.makeText(RecipeDetailActivity.this, 
+                        "Lỗi: Server trả về phản hồi trống", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("RecipeDetailActivity", "Network error", t);
+                    Toast.makeText(RecipeDetailActivity.this, 
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void handleErrorResponse(Response<?> response) {
+        try {
+            String errorBody = response.errorBody() != null ? 
+                response.errorBody().string() : "Unknown error";
+            Log.e("RecipeDetailActivity", "Error body: " + errorBody);
+            Toast.makeText(RecipeDetailActivity.this, 
+                "Lỗi: " + errorBody, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Log.e("RecipeDetailActivity", "Error reading error body", e);
+            Toast.makeText(RecipeDetailActivity.this, 
+                "Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateBookmarkIcon() {
