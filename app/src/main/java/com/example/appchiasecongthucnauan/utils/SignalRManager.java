@@ -14,6 +14,7 @@ import com.microsoft.signalr.Action3;
 
 import io.reactivex.rxjava3.core.Single;
 
+
 public class SignalRManager {
     private static SignalRManager instance;
     private Map<String, HubConnection> hubConnections;
@@ -38,7 +39,7 @@ public class SignalRManager {
         String hubUrl = BASE_URL + "/" + hubName;
         Log.e("SignalR", hubUrl);
         HubConnection hubConnection = HubConnectionBuilder.create(hubUrl)
-                .withAccessTokenProvider(io.reactivex.Single.just(token))
+                .withAccessTokenProvider(Single.just(token))
                 .build();
         hubConnections.put(hubName, hubConnection);
     }

@@ -2,7 +2,6 @@ package com.example.appchiasecongthucnauan.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,22 +15,17 @@ import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.adapters.ChatAdapter;
 import com.example.appchiasecongthucnauan.apis.ApiService;
 import com.example.appchiasecongthucnauan.models.ChatMessage;
-import com.example.appchiasecongthucnauan.models.SendMessageRequest;
 import com.example.appchiasecongthucnauan.models.MessageDto;
-import com.example.appchiasecongthucnauan.models.ConversationDto;
+import com.example.appchiasecongthucnauan.models.SendMessageRequest;
 import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 import com.example.appchiasecongthucnauan.utils.SignalRManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChatActivity extends AppCompatActivity {
 

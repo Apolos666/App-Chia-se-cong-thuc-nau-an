@@ -5,6 +5,8 @@ import com.example.appchiasecongthucnauan.models.RecipeDto;
 import com.example.appchiasecongthucnauan.models.RegisterDto;
 import com.example.appchiasecongthucnauan.models.RecipeCategoryDto;
 import com.example.appchiasecongthucnauan.models.UpdateUserDto;
+import com.example.appchiasecongthucnauan.models.explore.RecentRecipeDto;
+import com.example.appchiasecongthucnauan.models.explore.TrendingRecipeDto;
 import com.example.appchiasecongthucnauan.models.user.UserDto;
 import com.example.appchiasecongthucnauan.models.CommentDto;
 import com.example.appchiasecongthucnauan.models.CreateCommentRequest;
@@ -60,7 +62,7 @@ public interface ApiService {
         Call<List<RecipeDto>> getRecipes();
 
         @GET("api/recipes/{id}")
-        Call<RecipeDto> getRecipe(@Path("id") String recipeId);
+        Call<RecipeDto> getRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
 
         @POST("api/comments")
         Call<CommentDto> createComment(@Header("Authorization") String token, @Body CreateCommentRequest request);
@@ -108,4 +110,16 @@ public interface ApiService {
 
         @GET("api/bookmarks")
         Call<List<BookmarkDto>> getBookmarks(@Header("Authorization") String token);
+
+        @POST("api/recipes/{id}/like")
+        Call<Void> likeRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
+
+        @DELETE("api/recipes/{id}/unlike")
+        Call<Void> unlikeRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
+
+        @GET("api/recipes/trending")
+        Call<List<TrendingRecipeDto>> getTrendingRecipes(@Query("limit") int limit);
+
+        @GET("api/recipes/recent")
+        Call<List<RecentRecipeDto>> getRecentRecipes(@Query("limit") int limit);
 }

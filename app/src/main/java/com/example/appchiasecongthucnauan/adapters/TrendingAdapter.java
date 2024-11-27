@@ -7,16 +7,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.example.appchiasecongthucnauan.R;
-import com.example.appchiasecongthucnauan.models.TrendingItem;
+import com.example.appchiasecongthucnauan.models.explore.TrendingRecipeDto;
 
 import java.util.List;
 
 public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHolder> {
-    private List<TrendingItem> items;
+    private List<TrendingRecipeDto> recipes;
 
-    public TrendingAdapter(List<TrendingItem> items) {
-        this.items = items;
+    public TrendingAdapter(List<TrendingRecipeDto> recipes) {
+        this.recipes = recipes;
     }
 
     @NonNull
@@ -28,16 +29,23 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TrendingItem item = items.get(position);
-        holder.titleTextView.setText(item.getTitle());
-        holder.authorTextView.setText(item.getAuthor());
-        // Load image using Glide or Picasso
-        // Glide.with(holder.imageView.getContext()).load(item.getImageUrl()).into(holder.imageView);
+        TrendingRecipeDto recipe = recipes.get(position);
+        holder.titleTextView.setText(recipe.getTitle());
+        holder.authorTextView.setText("Bởi: "+recipe.getChefName());
+        holder.trendingTextView.setText(recipe.getLikesCount() + " lượt thích");
+        
+        // Load ảnh sử dụng Glide
+        if (recipe.getImageUrl() != null) {
+            Glide.with(holder.imageView.getContext())
+                .load(recipe.getImageUrl())
+                .placeholder(R.drawable.placeholder_image)
+                .into(holder.imageView);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return recipes.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

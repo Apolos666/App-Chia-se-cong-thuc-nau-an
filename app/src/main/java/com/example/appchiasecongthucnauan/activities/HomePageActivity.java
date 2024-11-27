@@ -106,6 +106,7 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         }
+        fetchRecipes();
     }
 
     @Override
