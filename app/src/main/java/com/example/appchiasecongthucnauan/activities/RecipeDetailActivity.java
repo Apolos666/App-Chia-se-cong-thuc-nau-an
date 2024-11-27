@@ -32,14 +32,17 @@ import com.example.appchiasecongthucnauan.models.CreateCommentRequest;
 import com.example.appchiasecongthucnauan.models.RecipeDto;
 import com.example.appchiasecongthucnauan.utils.SignalRManager;
 import com.example.appchiasecongthucnauan.utils.RetrofitClient;
+import com.example.appchiasecongthucnauan.models.BookmarkResponse;
 
+import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
 public class RecipeDetailActivity extends AppCompatActivity implements CommentAdapter.OnCommentAvatarClickListener {
-    private ImageView backButton;
+    private ImageView backButton, bookmarkButton, likeButton;
     private TextView recipeName, chefName, likesCount, commentsCount;
     private TextView ingredientsText, instructionsText;
     private RecyclerView commentsRecyclerView;
@@ -54,8 +57,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
     private String userName;
     private String userId;
     private ApiService apiService;
+    private boolean isBookmarked = false;
     private ImageView likeIconView;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +69,15 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
         setupSignalR();
         setupRecipe();
         setupComments();
+        checkBookmarkStatus();
+
     }
+
+
 
     private void initViews() {
         backButton = findViewById(R.id.backButton);
+//        likeButton = findViewById(R.id.likeButton);
         recipeName = findViewById(R.id.recipeName);
         chefName = findViewById(R.id.chefName);
         likesCount = findViewById(R.id.likesCount);
@@ -82,9 +90,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
         mediaRecyclerView = findViewById(R.id.mediaRecyclerView);
         mediaRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        PagerSnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(mediaRecyclerView);
+            PagerSnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(mediaRecyclerView);
 
+            backButton.setOnClickListener(v -> finish());
+
+
+            sendCommentButton.setOnClickListener(v -> sendComment());
+            bookmarkButton = findViewById(R.id.BookMarkButton);
+            recipeId = getIntent().getStringExtra("RECIPE_ID");
+            bookmarkButton.setOnClickListener(v -> toggleBookmark());
         backButton.setOnClickListener(v -> finish());
         sendCommentButton.setOnClickListener(v -> sendComment());
 
@@ -284,5 +299,97 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("USER_ID", userId);
         startActivity(intent);
+    }
+
+    private void checkBookmarkStatus() {
+        String token = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("token", "");
+        RetrofitClient.getInstance().getApiService()
+            .getBookmarkStatus("Bearer " + token, recipeId)
+            .enqueue(new Callback<BookmarkResponse>() {
+                @Override
+                public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        isBookmarked = response.body().isBookmarked();
+                        updateBookmarkIcon();
+                    } else {
+                        Log.e("RecipeDetailActivity", "Error: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                    Log.e("RecipeDetailActivity", "Error: " + t.getMessage());
+                    Toast.makeText(RecipeDetailActivity.this,
+                        "Lỗi kiểm tra trạng thái bookmark", Toast.LENGTH_SHORT).show();
+                }
+            });
+    }
+
+    private void toggleBookmark() {
+        String token = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("token", "");
+
+        Call<BookmarkResponse> call;
+        if (isBookmarked) {
+            // Xóa bookmark
+            call = RetrofitClient.getInstance().getApiService()
+                .removeBookmark("Bearer " + token, recipeId);
+        } else {
+            // Thêm bookmark
+            call = RetrofitClient.getInstance().getApiService()
+                .addBookmark("Bearer " + token, recipeId);
+        }
+
+        call.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                if (!response.isSuccessful()) {
+                    handleErrorResponse(response);
+                    return;
+                }
+
+                if (response.body() == null) {
+                    Toast.makeText(RecipeDetailActivity.this,
+                        "Lỗi: Không nhận được phản hồi từ server", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                isBookmarked = response.body().isBookmarked();
+                updateBookmarkIcon(); // Cập nhật icon bookmark
+                String message = isBookmarked ? "Đã lưu công thức" : "Đã bỏ lưu công thức";
+                Toast.makeText(RecipeDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                if (t instanceof EOFException) {
+                    // Handle empty response specifically
+                    Toast.makeText(RecipeDetailActivity.this,
+                        "Lỗi: Server trả về phản hồi trống", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("RecipeDetailActivity", "Network error", t);
+                    Toast.makeText(RecipeDetailActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void handleErrorResponse(Response<?> response) {
+        try {
+            String errorBody = response.errorBody() != null ?
+                response.errorBody().string() : "Unknown error";
+            Log.e("RecipeDetailActivity", "Error body: " + errorBody);
+            Toast.makeText(RecipeDetailActivity.this,
+                "Lỗi: " + errorBody, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Log.e("RecipeDetailActivity", "Error reading error body", e);
+            Toast.makeText(RecipeDetailActivity.this,
+                "Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateBookmarkIcon() {
+        bookmarkButton.setImageResource(isBookmarked ?
+            R.drawable.baseline_bookmark_24 : R.drawable.baseline_bookmark_border_24);
     }
 }

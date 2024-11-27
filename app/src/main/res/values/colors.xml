@@ -35,4 +35,8 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorBackground">#FFFFFF</color>
 
+    <!-- Supporting Colors -->
+    <!-- Bookmark Yellow: Use for bookmarks. -->
+    <color name="bookmark_yellow">#FFD700</color>
+
 </resources>

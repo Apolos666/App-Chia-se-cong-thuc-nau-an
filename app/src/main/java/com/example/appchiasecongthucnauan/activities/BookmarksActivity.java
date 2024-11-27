@@ -1,9 +1,13 @@
 package com.example.appchiasecongthucnauan.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +17,8 @@ import com.example.appchiasecongthucnauan.adapters.CollectionsAdapter;
 import com.example.appchiasecongthucnauan.fragments.ChooseCollectionDialog;
 import com.example.appchiasecongthucnauan.models.Bookmark;
 import com.example.appchiasecongthucnauan.models.BookmarkCollection;
+import com.example.appchiasecongthucnauan.models.BookmarkDto;
+import com.example.appchiasecongthucnauan.utils.RetrofitClient;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import android.widget.ImageButton;
@@ -20,6 +26,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BookmarksActivity extends AppCompatActivity {
     private EditText searchBookmarks;
@@ -34,55 +44,62 @@ public class BookmarksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
 
-        searchBookmarks = findViewById(R.id.searchBookmarks);
+        initViews();
+        loadBookmarks();
+    }
 
+    private void initViews() {
+        searchBookmarks = findViewById(R.id.searchBookmarks);
         bookmarksRecyclerView = findViewById(R.id.bookmarksRecyclerView);
         backButton = findViewById(R.id.btnBack);
-
-        // Initialize data
-        collections = new ArrayList<>();
-        collections.add(new BookmarkCollection("Italian Favorites", 1));
-        collections.add(new BookmarkCollection("Quick Meals", 2));
-        collections.add(new BookmarkCollection("Desserts", 1));
-
-        bookmarks = new ArrayList<>();
-        bookmarks.add(new Bookmark("Summer Salad", "Chef Maria"));
-        bookmarks.add(new Bookmark("Summer Salad", "Chef Maria"));
-        bookmarks.add(new Bookmark("Summer Salad", "Chef Maria"));
-
-        // Set up RecyclerViews
+        
         bookmarksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        CollectionsAdapter collectionsAdapter = new CollectionsAdapter(collections);
-
-//        BookmarksAdapter bookmarksAdapter = new BookmarksAdapter(bookmarks, bookmark -> showPopupMenu(bookmark));
-        BookmarksAdapter bookmarksAdapter = new BookmarksAdapter(bookmarks, bookmark -> showChooseCollectionDialog(bookmark));
-
-        bookmarksRecyclerView.setAdapter(bookmarksAdapter);
-
-
         backButton.setOnClickListener(v -> finish());
     }
 
-//    private void showPopupMenu(Bookmark bookmark) {
-//        PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.bookmarksRecyclerView)); // Vị trí của popup
-//        for (BookmarkCollection collection : collections) {
-//            popupMenu.getMenu().add(collection.getName()); // Thêm tên các collection vào menu
-//        }
-//
-//        popupMenu.setOnMenuItemClickListener(item -> {
-//            for (BookmarkCollection collection : collections) {
-//                if (item.getTitle().equals(collection.getName())) {
-//                    // TODO: Implement logic to move bookmark to selected collection
-//                    Toast.makeText(this, "Moved " + bookmark.getTitle() + " to " + collection.getName(), Toast.LENGTH_SHORT).show();
-//                    return true;
-//                }
-//            }
-//            return false;
-//        });
-//
-//        popupMenu.show();
-//    }
+    private void loadBookmarks() {
+        String token = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+            .getString("token", "");
+
+        RetrofitClient.getInstance().getApiService()
+            .getBookmarks("Bearer " + token)
+            .enqueue(new Callback<List<BookmarkDto>>() {
+                @Override
+                public void onResponse(Call<List<BookmarkDto>> call,
+                    Response<List<BookmarkDto>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<Bookmark> bookmarks = new ArrayList<>();
+                        for (BookmarkDto dto : response.body()) {
+                            bookmarks.add(new Bookmark(
+                                dto.getTitle(),
+                                dto.getCreatorName(),
+                                dto.getMediaUrl(),
+                                dto.getRecipeId()
+                            ));
+                        }
+                        setupBookmarksAdapter(bookmarks);
+                    } else {
+                        Toast.makeText(BookmarksActivity.this, 
+                            "Không thể tải bookmark", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<BookmarkDto>> call, Throwable t) {
+                    Toast.makeText(BookmarksActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+                }
+            });
+    }
+
+    private void setupBookmarksAdapter(List<Bookmark> bookmarks) {
+        BookmarksAdapter adapter = new BookmarksAdapter(
+            bookmarks,
+            bookmark -> showChooseCollectionDialog(bookmark)
+        );
+        bookmarksRecyclerView.setAdapter(adapter);
+    }
 
     private void showChooseCollectionDialog(Bookmark bookmark) {
         ChooseCollectionDialog dialog = new ChooseCollectionDialog(collections, selectedCollection -> {

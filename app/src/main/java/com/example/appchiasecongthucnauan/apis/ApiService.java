@@ -15,6 +15,8 @@ import com.example.appchiasecongthucnauan.models.ConversationDto;
 import com.example.appchiasecongthucnauan.models.MessageDto;
 import com.example.appchiasecongthucnauan.models.userfollow.FollowStatusResponse;
 import com.example.appchiasecongthucnauan.models.search.SearchResultDto;
+import com.example.appchiasecongthucnauan.models.BookmarkResponse;
+import com.example.appchiasecongthucnauan.models.BookmarkDto;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -30,6 +32,8 @@ import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import java.util.UUID;
+import android.util.Log;
 
 public interface ApiService {
         @POST("api/auth/register")
@@ -95,15 +99,27 @@ public interface ApiService {
         @GET("api/search")
         Call<SearchResultDto> search(@Header("Authorization") String token, @Query("q") String searchTerm);
 
+        @GET("api/bookmarks/{recipeId}")
+        Call<BookmarkResponse> getBookmarkStatus(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+
+        @POST("api/bookmarks/{recipeId}")
+        Call<BookmarkResponse> addBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+
+        @DELETE("api/bookmarks/{recipeId}")
+        Call<BookmarkResponse> removeBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+
+        @GET("api/bookmarks")
+        Call<List<BookmarkDto>> getBookmarks(@Header("Authorization") String token);
+
         @POST("api/recipes/{id}/like")
         Call<Void> likeRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
 
         @DELETE("api/recipes/{id}/unlike")
         Call<Void> unlikeRecipe(@Path("id") String recipeId, @Header("Authorization") String token);
-        
+
         @GET("api/recipes/trending")
         Call<List<TrendingRecipeDto>> getTrendingRecipes(@Query("limit") int limit);
 
-        @GET("api/recipes/recent") 
+        @GET("api/recipes/recent")
         Call<List<RecentRecipeDto>> getRecentRecipes(@Query("limit") int limit);
 }
