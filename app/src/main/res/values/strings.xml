@@ -8,9 +8,9 @@
     <string name="name">Tên</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
-    <string name="bio">Bio</string>
+    <string name="bio">Giới thiệu</string>
     <string name="website">Website</string>
-    <string name="social_media">Social Media</string>
+    <string name="social_media">Mạng xã hội</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_bookmark">Dấu trang của tôi</string>

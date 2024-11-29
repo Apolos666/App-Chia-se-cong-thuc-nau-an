@@ -76,9 +76,21 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        tvPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, PrivacyPolicyActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvHelpSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, SupportActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        tvPrivacy.setOnClickListener(optionClickListener);
-        tvHelpSupport.setOnClickListener(optionClickListener);
     }
 
     private void setupNavigationView() {

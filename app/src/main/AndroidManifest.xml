@@ -68,7 +68,14 @@
         <activity android:name=".activities.ThanhVienNhomActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".activities.PrivacyPolicyActivity"
+            android:exported="true">
+        </activity>
+        <activity android:name=".activities.SupportActivity"
+            android:exported="true">
+        </activity>
         <activity android:name=".MainActivity" />
+
     </application>
 
 </manifest>
