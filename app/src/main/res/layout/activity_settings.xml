@@ -78,7 +78,9 @@
             android:layout_height="wrap_content"
             android:text="Chính sách"
             android:padding="16dp"
-            android:drawableEnd="@drawable/ic_arrow_right"/>
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <TextView
             android:id="@+id/tvHelpSupport"
@@ -86,7 +88,9 @@
             android:layout_height="wrap_content"
             android:text="Hỗ trợ"
             android:padding="16dp"
-            android:drawableEnd="@drawable/ic_arrow_right"/>
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:clickable="true"
+            android:focusable="true"/>
         <TextView
             android:id="@+id/tvThanhVienNhom"
             android:layout_width="match_parent"
