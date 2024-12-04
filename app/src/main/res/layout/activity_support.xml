@@ -9,12 +9,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hỗ trợ"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nội dung hỗ trợ sẽ được hiển thị ở đây."
-        android:layout_marginTop="16dp" />
-</LinearLayout> 
+        android:text="• Liên hệ qua email: hotro@cookbook.com"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="• Hotline hỗ trợ: 1900-123-456"
+        android:textSize="18sp"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="• FAQ: Xem câu hỏi thường gặp trong phần trợ giúp của ứng dụng."
+        android:textSize="18sp"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="• Báo cáo lỗi: Sử dụng tính năng 'Phản hồi' trong ứng dụng."
+        android:textSize="18sp"
+        android:layout_marginTop="12dp" />
+</LinearLayout>

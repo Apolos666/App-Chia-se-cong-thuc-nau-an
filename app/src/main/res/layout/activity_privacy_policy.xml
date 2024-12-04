@@ -9,12 +9,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chính sách"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nội dung chính sách sẽ được hiển thị ở đây."
-        android:layout_marginTop="16dp" />
-</LinearLayout> 
+        android:text="1. Người dùng chịu trách nhiệm với nội dung đăng tải, bao gồm hình ảnh và video."
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Không đăng tải nội dung vi phạm pháp luật hoặc bản quyền."
+        android:textSize="18sp"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3. Ứng dụng không chịu trách nhiệm về các sai sót trong công thức nấu ăn."
+        android:textSize="18sp"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4. Nội dung phải đảm bảo phù hợp với cộng đồng và tôn trọng người khác."
+        android:textSize="18sp"
+        android:layout_marginTop="12dp" />
+</LinearLayout>
