@@ -30,15 +30,17 @@
             android:layout_marginStart="16dp">
 
             <TextView
+                android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jane Doe"
+                android:text="Tên người dùng"
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/handleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\@janedoe"
+                android:text="@janedoe"
                 android:textColor="#888888"/>
         </LinearLayout>
     </LinearLayout>
@@ -91,6 +93,7 @@
             android:drawableEnd="@drawable/ic_arrow_right"
             android:clickable="true"
             android:focusable="true"/>
+        
         <TextView
             android:id="@+id/tvThanhVienNhom"
             android:layout_width="match_parent"
