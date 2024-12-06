@@ -310,6 +310,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
                 public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         isBookmarked = response.body().isBookmarked();
+                        Log.e("RecipeDetailActivity,Bookmark", String.valueOf(isBookmarked));
                         updateBookmarkIcon();
                     } else {
                         Log.e("RecipeDetailActivity", "Error: " + response.code());
