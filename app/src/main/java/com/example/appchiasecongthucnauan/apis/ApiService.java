@@ -99,7 +99,7 @@ public interface ApiService {
         @GET("api/search")
         Call<SearchResultDto> search(@Header("Authorization") String token, @Query("q") String searchTerm);
 
-        @GET("api/bookmarks/{recipeId}")
+        @GET("api/bookmarks/check/{recipeId}")
         Call<BookmarkResponse> getBookmarkStatus(@Header("Authorization") String token, @Path("recipeId") String recipeId);
 
         @POST("api/bookmarks/{recipeId}")

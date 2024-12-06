@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Ingredients"
+                android:text="Nguyên liệu"
                 android:textStyle="bold" />
 
             <TextView
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Instructions"
+                android:text="Các bước thực hiện"
                 android:textStyle="bold" />
 
             <TextView
@@ -156,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Comments"
+                android:text="Bình luận"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -179,7 +179,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Add a comment..." />
+            android:hint="Thêm bình luận" />
 
         <ImageView
             android:id="@+id/sendCommentButton"

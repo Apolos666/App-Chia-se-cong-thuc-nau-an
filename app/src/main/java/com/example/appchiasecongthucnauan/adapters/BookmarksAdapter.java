@@ -14,10 +14,12 @@ import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.activities.RecipeDetailActivity;
 import com.example.appchiasecongthucnauan.models.Bookmark;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.ViewHolder> {
     private List<Bookmark> bookmarks;
+    private List<Bookmark> bookmarksFiltered;
     private OnBookmarkActionListener listener;
 
     @FunctionalInterface
@@ -27,7 +29,24 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
 
     public BookmarksAdapter(List<Bookmark> bookmarks, OnBookmarkActionListener listener) {
         this.bookmarks = bookmarks;
+        this.bookmarksFiltered = new ArrayList<>(bookmarks);
         this.listener = listener;
+    }
+
+    public void filter(String query) {
+        bookmarksFiltered.clear();
+        if (query.isEmpty()) {
+            bookmarksFiltered.addAll(bookmarks);
+        } else {
+            String lowerCaseQuery = query.toLowerCase().trim();
+            for (Bookmark bookmark : bookmarks) {
+                if (bookmark.getTitle().toLowerCase().contains(lowerCaseQuery) ||
+                    bookmark.getAuthor().toLowerCase().contains(lowerCaseQuery)) {
+                    bookmarksFiltered.add(bookmark);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -38,7 +57,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Bookmark bookmark = bookmarks.get(position);
+        Bookmark bookmark = bookmarksFiltered.get(position);
         holder.title.setText(bookmark.getTitle());
         holder.author.setText(bookmark.getAuthor());
         
@@ -62,7 +81,13 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
 
     @Override
     public int getItemCount() {
-        return bookmarks.size();
+        return bookmarksFiltered.size();
+    }
+
+    public void setBookmarks(List<Bookmark> bookmarks) {
+        this.bookmarks = bookmarks;
+        this.bookmarksFiltered = new ArrayList<>(bookmarks);
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

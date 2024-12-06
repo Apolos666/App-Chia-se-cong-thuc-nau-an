@@ -38,6 +38,7 @@ public class BookmarksActivity extends AppCompatActivity {
     private List<Bookmark> bookmarks;
     private BottomSheetDialog bottomSheetDialog;
     private ImageButton backButton;
+    private BookmarksAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class BookmarksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bookmarks);
 
         initViews();
+        setupSearchFunctionality();
         loadBookmarks();
     }
 
@@ -55,6 +57,23 @@ public class BookmarksActivity extends AppCompatActivity {
         
         bookmarksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         backButton.setOnClickListener(v -> finish());
+    }
+
+    private void setupSearchFunctionality() {
+        searchBookmarks.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (adapter != null) {
+                    adapter.filter(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 
     private void loadBookmarks() {
@@ -94,7 +113,7 @@ public class BookmarksActivity extends AppCompatActivity {
     }
 
     private void setupBookmarksAdapter(List<Bookmark> bookmarks) {
-        BookmarksAdapter adapter = new BookmarksAdapter(
+        adapter = new BookmarksAdapter(
             bookmarks,
             bookmark -> showChooseCollectionDialog(bookmark)
         );

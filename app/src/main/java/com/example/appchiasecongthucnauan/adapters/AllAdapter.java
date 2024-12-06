@@ -57,7 +57,7 @@ public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             User user = (User) items.get(position);
 
             userHolder.nameTextView.setText(user.getName());
-            userHolder.usernameTextView.setText(user.getUsername());
+            userHolder.usernameTextView.setText("");
 
             // Nếu có userImageView, bạn có thể thêm code để load ảnh ở đây
             // Ví dụ: Glide.with(holder.itemView.getContext()).load(user.getImageUrl()).into(userHolder.userImageView);
