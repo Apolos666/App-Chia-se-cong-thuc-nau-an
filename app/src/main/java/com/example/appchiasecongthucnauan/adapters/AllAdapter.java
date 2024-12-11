@@ -3,14 +3,19 @@ package com.example.appchiasecongthucnauan.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import com.bumptech.glide.Glide;
 import com.example.appchiasecongthucnauan.R;
 import com.example.appchiasecongthucnauan.models.Recipe_1;
 import com.example.appchiasecongthucnauan.models.User;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Object> items = new ArrayList<>();
@@ -19,6 +24,7 @@ public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class UserViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView usernameTextView;
+
 
         UserViewHolder(View itemView) {
             super(itemView);
@@ -31,10 +37,13 @@ public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class RecipeViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView authorTextView;
+        ImageView thumbnailImageView;
+
 
         RecipeViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
+            thumbnailImageView = itemView.findViewById(R.id.thumbnailImageView);
             authorTextView = itemView.findViewById(R.id.authorTextView);
         }
     }
@@ -68,8 +77,16 @@ public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             recipeHolder.titleTextView.setText(recipe.getTitle());
             recipeHolder.authorTextView.setText(recipe.getAuthor());
 
-            // Nếu có imageView cho công thức, bạn cũng có thể thêm code để load ảnh ở đây
-        }
+            if (recipe.getImageUrl()!= null && !recipe.getImageUrl().isEmpty()) {
+                Glide.with(recipeHolder.thumbnailImageView.getContext())
+                        .load(recipe.getImageUrl())
+                        .placeholder(R.drawable.placeholder_image)
+                        .error(R.drawable.placeholder_image)
+                        .centerCrop()
+                        .into(recipeHolder.thumbnailImageView);
+            } else {
+                recipeHolder.thumbnailImageView.setImageResource(R.drawable.placeholder_image);
+            }        }
     }
 
     @Override

@@ -103,10 +103,10 @@ public interface ApiService {
         Call<BookmarkResponse> getBookmarkStatus(@Header("Authorization") String token, @Path("recipeId") String recipeId);
 
         @POST("api/bookmarks/{recipeId}")
-        Call<BookmarkResponse> addBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+        Call<Void> addBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
 
         @DELETE("api/bookmarks/{recipeId}")
-        Call<BookmarkResponse> removeBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
+        Call<Void> removeBookmark(@Header("Authorization") String token, @Path("recipeId") String recipeId);
 
         @GET("api/bookmarks")
         Call<List<BookmarkDto>> getBookmarks(@Header("Authorization") String token);
