@@ -58,7 +58,7 @@ public class AllFragment extends Fragment implements SearchableFragment {
         // Thêm kết quả công thức
         if (results.getRecipes() != null) {
             for (RecipeSearchResultDto recipeDto : results.getRecipes()) {
-                combinedResults.add(new Recipe_1(recipeDto.getTitle(), recipeDto.getChefName(), recipeDto.getThumbnailUrl()));
+                combinedResults.add(new Recipe_1(recipeDto.getId(),recipeDto.getTitle(), recipeDto.getChefName(), recipeDto.getThumbnailUrl()));
             }
         }
         

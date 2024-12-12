@@ -56,7 +56,7 @@ public class RecipesFragment extends Fragment implements SearchableFragment {
             if (adapter != null && results.getRecipes() != null) {
                 List<Recipe_1> recipes = new ArrayList<>();
                 for (RecipeSearchResultDto recipeDto : results.getRecipes()) {
-                    recipes.add(new Recipe_1(recipeDto.getTitle(), recipeDto.getChefName(), recipeDto.getThumbnailUrl()));
+                    recipes.add(new Recipe_1(recipeDto.getId(),recipeDto.getTitle(), recipeDto.getChefName(), recipeDto.getThumbnailUrl()));
                 }
                 adapter.setRecipes(recipes);
             }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.activities.RecipeDetailActivity;
 import com.example.appchiasecongthucnauan.models.explore.TrendingRecipeDto;
 
 import java.util.List;
@@ -41,6 +42,13 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
                 .placeholder(R.drawable.placeholder_image)
                 .into(holder.imageView);
         }
+        holder.itemView.setOnClickListener(v -> {
+            // Navigate to recipe detail
+            RecipeDetailActivity.start(
+                    holder.itemView.getContext(),
+                    recipe.getId()
+            );
+        });
     }
 
     @Override

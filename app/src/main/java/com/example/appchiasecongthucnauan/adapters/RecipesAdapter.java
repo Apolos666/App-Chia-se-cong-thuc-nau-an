@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.activities.RecipeDetailActivity;
 import com.example.appchiasecongthucnauan.models.Recipe_1;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
@@ -52,6 +53,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
         } else {
             holder.thumbnailImageView.setImageResource(R.drawable.placeholder_image);
         }
+        holder.itemView.setOnClickListener(v -> {
+            // Navigate to recipe detail
+            RecipeDetailActivity.start(
+                    holder.itemView.getContext(),
+                    recipe.getId()
+            );
+        });
     }
 
     @Override
