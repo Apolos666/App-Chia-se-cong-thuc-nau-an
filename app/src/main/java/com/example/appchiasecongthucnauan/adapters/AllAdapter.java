@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.activities.RecipeDetailActivity;
 import com.example.appchiasecongthucnauan.models.Recipe_1;
 import com.example.appchiasecongthucnauan.models.User;
 
@@ -24,7 +25,6 @@ public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class UserViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView usernameTextView;
-
 
         UserViewHolder(View itemView) {
             super(itemView);
@@ -77,7 +77,7 @@ public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             recipeHolder.titleTextView.setText(recipe.getTitle());
             recipeHolder.authorTextView.setText(recipe.getAuthor());
 
-            if (recipe.getImageUrl()!= null && !recipe.getImageUrl().isEmpty()) {
+            if (recipe.getImageUrl() != null && !recipe.getImageUrl().isEmpty()) {
                 Glide.with(recipeHolder.thumbnailImageView.getContext())
                         .load(recipe.getImageUrl())
                         .placeholder(R.drawable.placeholder_image)
@@ -86,7 +86,15 @@ public class AllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .into(recipeHolder.thumbnailImageView);
             } else {
                 recipeHolder.thumbnailImageView.setImageResource(R.drawable.placeholder_image);
-            }        }
+            }
+            recipeHolder.itemView.setOnClickListener(v -> {
+                // Navigate to recipe detail
+                RecipeDetailActivity.start(
+                        recipeHolder.itemView.getContext(),
+                        recipe.getId()
+                );
+            });
+        }
     }
 
     @Override

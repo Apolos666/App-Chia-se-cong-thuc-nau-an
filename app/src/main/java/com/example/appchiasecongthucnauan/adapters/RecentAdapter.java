@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.appchiasecongthucnauan.R;
+import com.example.appchiasecongthucnauan.activities.RecipeDetailActivity;
 import com.example.appchiasecongthucnauan.models.explore.RecentRecipeDto;
 import com.example.appchiasecongthucnauan.utils.TimeUtils;
 
@@ -45,6 +46,13 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
                     .placeholder(R.drawable.placeholder_image)
                     .into(holder.imageView);
         }
+        holder.itemView.setOnClickListener(v -> {
+            // Navigate to recipe detail
+            RecipeDetailActivity.start(
+                    holder.itemView.getContext(),
+                    recipe.getId()
+            );
+        });
     }
 
     @Override
