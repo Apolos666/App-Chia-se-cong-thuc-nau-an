@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.core.Single;
 public class SignalRManager {
     private static SignalRManager instance;
     private Map<String, HubConnection> hubConnections;
-    private static final String BASE_URL = "http://10.0.2.2:5076/";
+    private static final String BASE_URL = "https://app-chia-se-cong-thuc.azurewebsites.net/";
 
     private SignalRManager() {
         hubConnections = new HashMap<>();

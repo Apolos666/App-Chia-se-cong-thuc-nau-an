@@ -86,7 +86,7 @@
                             android:id="@+id/tvMaSV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="MSSV: 2215053122323"
+                            android:text="MSSV: 22115053122323"
                             android:textSize="14sp"
                             android:layout_marginTop="4dp"/>
 
