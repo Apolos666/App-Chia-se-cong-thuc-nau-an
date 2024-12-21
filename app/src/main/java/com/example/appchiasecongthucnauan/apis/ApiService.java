@@ -4,6 +4,7 @@ import com.example.appchiasecongthucnauan.models.LoginDto;
 import com.example.appchiasecongthucnauan.models.RecipeDto;
 import com.example.appchiasecongthucnauan.models.RegisterDto;
 import com.example.appchiasecongthucnauan.models.RecipeCategoryDto;
+import com.example.appchiasecongthucnauan.models.UpdateRecipeDto;
 import com.example.appchiasecongthucnauan.models.UpdateUserDto;
 import com.example.appchiasecongthucnauan.models.explore.RecentRecipeDto;
 import com.example.appchiasecongthucnauan.models.explore.TrendingRecipeDto;
@@ -122,4 +123,17 @@ public interface ApiService {
 
         @GET("api/recipes/recent")
         Call<List<RecentRecipeDto>> getRecentRecipes(@Query("limit") int limit);
+
+        @PUT("api/recipes/{id}")
+        Call<Void> updateRecipe(
+            @Path("id") String recipeId,
+            @Header("Authorization") String token,
+            @Body UpdateRecipeDto updateRecipeDto
+        );
+
+        @DELETE("api/recipes/{id}")
+        Call<Void> deleteRecipe(
+            @Path("id") String recipeId,
+            @Header("Authorization") String token
+        );
 }
