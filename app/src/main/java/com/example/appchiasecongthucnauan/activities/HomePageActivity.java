@@ -121,19 +121,15 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
             public void onResponse(Call<List<RecipeDto>> call, Response<List<RecipeDto>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<RecipeDto> recipes = response.body();
-                    Log.d("HomePageActivity", "Số lượng công thức nhận được: " + recipes.size());
+                    // Lọc ra những công thức đã được phê duyệt
+                    List<RecipeDto> approvedRecipes = new ArrayList<>();
                     for (RecipeDto recipe : recipes) {
-                        Log.d("HomePageActivity", "Công thức: " + recipe.getTitle() +
-                                ", Tác giả: " + recipe.getUserName() +
-                                ", Số lượt thích: " + recipe.getLikesCount() +
-                                ", Số bình luận: " + recipe.getComments().size());
-                        if (recipe.getMediaUrls() != null && !recipe.getMediaUrls().isEmpty()) {
-                            Log.d("HomePageActivity", "Media URL đầu tiên: " + recipe.getMediaUrls().get(0));
-                        } else {
-                            Log.d("HomePageActivity", "Không có media URL");
+                        if (recipe.isApproved()) { // Chỉ lấy những công thức đã được phê duyệt
+                            approvedRecipes.add(recipe);
                         }
                     }
-                    updateRecyclerView(recipes);
+                    Log.d("HomePageActivity", "Số lượng công thức đã phê duyệt: " + approvedRecipes.size());
+                    updateRecyclerView(approvedRecipes);
                 } else {
                     Log.e("HomePageActivity", "Lỗi khi lấy danh sách công thức: " + response.code());
                     Toast.makeText(HomePageActivity.this, "Không thể lấy danh sách công thức", Toast.LENGTH_SHORT)
