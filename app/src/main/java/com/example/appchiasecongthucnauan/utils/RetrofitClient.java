@@ -12,7 +12,7 @@ import android.util.Log;
 import okhttp3.Request;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "https://app-chia-se-cong-thuc.azurewebsites.net/";
+    private static final String BASE_URL = "https://appchiasecongthucnauanbackend.azurewebsites.net/";
     private static RetrofitClient instance;
     private Retrofit retrofit;
     private ApiService apiService;
