@@ -123,6 +123,7 @@ public class HomePageActivity extends AppCompatActivity implements PostAdapter.O
                     List<RecipeDto> recipes = response.body();
                     // Lọc ra những công thức đã được phê duyệt
                     List<RecipeDto> approvedRecipes = new ArrayList<>();
+                    Log.d("HomePageActivity", "Số lượng công thức : " + approvedRecipes.size());
                     for (RecipeDto recipe : recipes) {
                         if (recipe.isApproved()) { // Chỉ lấy những công thức đã được phê duyệt
                             approvedRecipes.add(recipe);

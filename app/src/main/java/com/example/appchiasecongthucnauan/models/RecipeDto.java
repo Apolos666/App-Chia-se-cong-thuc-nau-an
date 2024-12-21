@@ -17,7 +17,7 @@ public class RecipeDto {
     private int likesCount;
     private List<CommentDto> comments;
     private boolean isLiked;
-    private boolean IsApproved;
+    private boolean isApproved;
 
     public UUID getId() {
         return id;
@@ -116,10 +116,10 @@ public class RecipeDto {
     }
 
     public boolean isApproved() {
-        return IsApproved;
+        return isApproved;
     }
 
     public void setApproved(boolean approved) {
-        IsApproved = approved;
+        isApproved = approved;
     }
 }
