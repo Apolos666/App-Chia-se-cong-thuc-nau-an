@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +59,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
     private ApiService apiService;
     private boolean isBookmarked = false;
     private ImageView likeIconView;
+    private ImageView editButton, deleteButton;
+    private String currentUserId;
+    private boolean isOwnRecipe = false;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,6 +109,18 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
 
         likeIconView = findViewById(R.id.likeIconView);
         likeIconView.setOnClickListener(v -> toggleLike());
+
+        editButton = findViewById(R.id.EditButton);
+        deleteButton = findViewById(R.id.DeleteButton);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        currentUserId = sharedPreferences.getString("userId", "");
+
+        editButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
+
+        editButton.setOnClickListener(v -> editRecipe());
+        deleteButton.setOnClickListener(v -> deleteRecipe());
     }
 
     private void setupRetrofit() {
@@ -274,6 +292,11 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
                     new Comment(commentDto.getUserId().toString(), commentDto.getUserName(), commentDto.getContent()));
         }
         commentAdapter.setComments(comments);
+
+        isOwnRecipe = currentUserId.equals(recipe.getUserId().toString());
+
+        editButton.setVisibility(isOwnRecipe ? View.VISIBLE : View.GONE);
+        deleteButton.setVisibility(isOwnRecipe ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -393,5 +416,59 @@ public class RecipeDetailActivity extends AppCompatActivity implements CommentAd
     private void updateBookmarkIcon() {
         bookmarkButton.setImageResource(isBookmarked ?
                 R.drawable.baseline_bookmark_24 : R.drawable.baseline_bookmark_border_24);
+    }
+
+    private void editRecipe() {
+        Intent intent = new Intent(this, EditRecipeActivity.class);
+        intent.putExtra("RECIPE_ID", recipeId);
+        startActivity(intent);
+    }
+
+    private void deleteRecipe() {
+        new AlertDialog.Builder(this)
+            .setTitle("Xác nhận xóa")
+            .setMessage("Bạn có chắc chắn muốn xóa công thức này?")
+            .setPositiveButton("Xóa", (dialog, which) -> {
+                performDeleteRecipe();
+            })
+            .setNegativeButton("Hủy", null)
+            .show();
+    }
+
+    private void performDeleteRecipe() {
+        // Hiển thị dialog loading
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang xóa công thức...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Call<Void> call = apiService.deleteRecipe(recipeId, "Bearer " + token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(RecipeDetailActivity.this, 
+                        "Đã xóa công thức thành công", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK); // Để activity trước có thể biết và refresh
+                    finish();
+                } else {
+                    if (response.code() == 404) {
+                        Toast.makeText(RecipeDetailActivity.this, 
+                            "Không tìm thấy công thức", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RecipeDetailActivity.this, 
+                            "Không thể xóa công thức", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(RecipeDetailActivity.this, 
+                    "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
